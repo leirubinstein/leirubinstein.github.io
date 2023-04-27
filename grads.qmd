@@ -1,0 +1,16 @@
+---
+title: "Grads"
+output:
+  quarto::bookdown_html:
+    css: style.css
+---
+
+<div class="image-grid">
+  <figure>
+    <img src="images/grads/0D6B6A6D-A191-4E01-AD5E-16ADDD4CDD56-3A9875FD-6CD5-4F8B-89A9-BBA56B045C9D.jpg" width="500">
+  </figure>
+ 
+  <figure>
+    <img src="images/grads/DSC_2044.jpg" width="500">
+  </figure>
+</div>

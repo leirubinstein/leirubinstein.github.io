@@ -1,0 +1,8 @@
+---
+title: "Leilanie Rubinstein"
+image: images/index/kaisaplaceholder.jpg
+about:
+  template: jolla
+---
+
+Hi! My name is Leilanie Rubinstein and I'm a photographer based in Santa Barbara, CA. I specialize in portrait photography, and aim to capture images that showcase the joy and beauty within each individual. Using natural lighting and our stunning natural environment, I'm committed to making each shoot a memorable and enjoyable experience that my clients can look back on for years to come!

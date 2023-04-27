@@ -1,0 +1,27 @@
+project:
+  type: website
+  output-dir: docs
+
+website:
+  title: "Lei Rubinstein"
+  navbar:
+    left:
+      - href: index.qmd
+        text: Home
+      - about.qmd
+      - grads.qmd
+
+format:
+  html:
+    theme: cosmo
+    css: styles.css
+    toc: true
+
+output:
+  quarto::bookdown_html:
+    css: style.css
+
+editor: visual
+  
+  
+  
