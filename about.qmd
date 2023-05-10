@@ -1,5 +1,5 @@
 ---
-title: "About"
+title: "Contact"
 ---
 
-About this site MEOW
+leilanierubinstein@gmail.com
