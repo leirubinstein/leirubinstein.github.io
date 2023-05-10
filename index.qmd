@@ -1,6 +1,6 @@
 ---
 title: "Leilanie Rubinstein"
-image: images/index/kaisaplaceholder.jpg
+image: images/index/DSC_9843.jpg
 about:
   template: jolla
 ---
