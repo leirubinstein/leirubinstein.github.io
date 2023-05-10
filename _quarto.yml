@@ -13,13 +13,13 @@ website:
 
 format:
   html:
-    theme: cosmo
+    theme: lux
     css: styles.css
     toc: true
 
 output:
   quarto::bookdown_html:
-    css: style.css
+    css: styles.css
 
 editor: visual
   
