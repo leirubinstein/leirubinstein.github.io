@@ -7,6 +7,7 @@ output:
 
 <div class="image-gallery">
 
+
 <img src="images/grads/DSC2235.jpg" style="max-width: 500px"/> 
 <img src="images/grads/_DSC2460.jpg" style="max-width: 500px"/> 
 <img src="images/grads/_DSC2586.jpg" style="max-width: 500px"/> 
