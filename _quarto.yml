@@ -3,18 +3,22 @@ project:
   output-dir: docs
 
 website:
-  title: "leirubinstein.github.io"
+  title: "Leilanie Rubinstein"
   navbar:
     left:
       - href: index.qmd
         text: Home
       - about.qmd
+      - photography.qmd
 
 format:
   html:
-    theme: cosmo
+    theme: 
+      light: morph
+      dark: solar
     css: styles.css
     toc: true
+    page-layout: full
 
 
 

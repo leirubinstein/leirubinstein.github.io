@@ -1,11 +1,22 @@
 ---
-title: "leirubinstein.github.io"
+title: "Leilanie Rubinstein"
+image: media/headshot.jpg
+2toc: false
+about: 
+  template: jolla
+  image-shape: round
+  image-width: 17em
+  links:
+    - text: LinkedIn
+      href: https://www.linkedin.com/in/leilanie-rubinstein/
+    - text: GitHub
+      href: https://github.com/leirubinstein/
+    - text: Email
+      href: mailto:leilanierubinstein@gmail.com
 ---
 
-This is a Quarto website.
+Leilanie Rubinstein earned her Bachelor of Arts in Political Science and Environmental Studies from the University of California, Santa Barbara in 2021. Inspired by Santa Barbara's legacy of environmental activism, Leilanie has dedicated herself to running local and federal campaigns with social justice and conservation-driven values for the past seven years. Following her undergraduate degree, she worked at an environmental law firm, specializing in litigation and regulatory disputes relating to remediation of Superfund sites. Her professional experience includes roles in political organizing, legislation, and environmental law, where she honed skills in data management, community engagement, and environmental policy analysis.
 
-To learn more about Quarto websites visit <https://quarto.org/docs/websites>.
+Currently pursuing a Master of Environmental Data Science at the Bren School, Leilanie aspires to work in government or to conduct policy relevant research after graduation. She aims to leverage data science techniques to develop solutions for resource management and climate change mitigation, promoting sustainable practices and enhancing climate resilience locally and globally.
 
-```{r}
-1 + 1
-```
+In her free time, Leilanie enjoys mountain biking, gaming, and exploring nature and the night sky through her camera lens.
