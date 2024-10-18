@@ -8,11 +8,15 @@ about:
   image-width: 17em
   links:
     - text: LinkedIn
+      icon: linkedin
       href: https://www.linkedin.com/in/leilanie-rubinstein/
     - text: GitHub
+      icon: github
       href: https://github.com/leirubinstein/
     - text: Email
+      icon: envelope
       href: mailto:leilanierubinstein@gmail.com
+  
 ---
 
 Leilanie Rubinstein earned her Bachelor of Arts in Political Science and Environmental Studies from the University of California, Santa Barbara in 2021. Inspired by Santa Barbara's legacy of environmental activism, Leilanie has dedicated herself to running local and federal campaigns with social justice and conservation-driven values for the past seven years. Following her undergraduate degree, she worked at an environmental law firm, specializing in litigation and regulatory disputes relating to remediation of Superfund sites. Her professional experience includes roles in political organizing, legislation, and environmental law, where she honed skills in data management, community engagement, and environmental policy analysis.

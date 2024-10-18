@@ -1,0 +1,57 @@
+/*-- scss:defaults --*/
+
+// import google fonts
+@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&display=swap');
+
+// Create font variables
+$josephin-sans: "Josefin Sans", sans-serif;
+
+
+// Color palette one
+$space-cadet: #22223B;
+$grey-violet: #4A4369;
+$rose-quartz-cool: #9A8C98;
+$pink-violet: #C9A7BD;
+$bonewhite: #F2E9E4;
+
+// Quarto Sass Variables
+$body-bg: $bonewhite;
+$navbar-bg: $rose-quartz-cool;
+$navbar-fg: $bonewhite;
+$navbar-hl: $grey-violet;
+
+/*-- scss:rules --*/
+
+h1, h2, h2, h3, h4, h5, h6 {
+  font-family: $josephin-sans;
+}
+
+h1, h2 {
+  letter-spacing: 0px;
+  font-weight: 800;
+}
+
+.title {
+  color: $space-cadet;
+}
+
+.center-text {
+  text-align: center;
+}
+
+.spacecadet-text {
+  color: $space-cadet;
+}
+
+.center-spacecadet {
+  text-align: center;
+  color: $space-cadet;
+  font-style: italic;
+}
+
+
+.navbar-brand imp {
+  max-height: 40px;
+  width: auto;
+}
+
