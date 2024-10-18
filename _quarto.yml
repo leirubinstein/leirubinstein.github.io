@@ -4,19 +4,23 @@ project:
 
 website:
   title: "Leilanie Rubinstein"
+  favicon: images/moon-regular.svg
   navbar:
     left:
       - href: index.qmd
         text: Home
       - about.qmd
+      - posts.qmd
       - photography.qmd
-
+  page-footer:
+    left: Copyright 2024 {{< fa regular copyright title="copyright logo" >}}  Leilanie Rubinstein
+    right: This website is built with  {{< fa brands github-alt title="github cat icon" >}}
+  
 format:
   html:
-    theme: 
-      light: morph
-      dark: solar
-    css: styles.css
+    theme: styles.scss
+    mainfont: Josefin Sans
+#    css: styles.css
     toc: true
     page-layout: full
 

@@ -1,0 +1,12 @@
+---
+title: "blog post title"
+description: "a short catchy description of the blog post"
+author:
+  - name: Leilanie Rubinstein
+    url: https://leirubinstein.github.io/
+  # can also add an orcid here
+    affiliation: MEDS
+    affiliation-url: https://bren.ucsb.edu/masters-programs/master-environmental-data-science/academics-meds-program
+date: 2024-10-18
+categories: [Quarto, MEDS]
+---

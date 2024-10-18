@@ -2,8 +2,18 @@
 title: "About"
 ---
 
-About this site
+## What I do for work
 
-```{r}
-1 + 1
-```
+<p class="spacecadet-text center-text">some text</p>
+
+## What I do for fun
+
+<p class="center-spacecadet">give the people what they want!</p>
+
+here is some more text [.center-spacecadet]
+
+::: {.spacecadet-text}
+here is a line
+
+here is another line
+:::
