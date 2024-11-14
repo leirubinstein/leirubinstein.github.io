@@ -1,4 +1,10 @@
 ---
 title: "Photography"
+lightbox: true
+editor_options: 
+  chunk_output_type: console
 ---
 
+![Santa Cruz Island, Channel Islands National Park](/media/photography/DSC_4341.jpg){group="my-gallery"}
+
+![Palm Springs, CA](/media/photography/DSC_9156.jpg){group="my-gallery"}

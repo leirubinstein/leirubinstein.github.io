@@ -9,4 +9,50 @@ author:
     affiliation-url: https://bren.ucsb.edu/masters-programs/master-environmental-data-science/academics-meds-program
 date: 2024-10-18
 categories: [Quarto, MEDS]
+toc: true
+bibliography: references.bib
+csl: plos-computational-biology.csl
+image: DSC_9156.jpg
+citation:
+  url: https://samanthacsik.github.io/posts/2024-10-18-my-first-post/
+draft: false
+draft-mode: visible
+# set draft to false when you want to post the page
 ---
+
+## this is my first section
+
+I'm going to insert a footnote here[^1]
+
+[^1]: Here is a new footnote
+
+## this is my second section
+
+Here's my next paragraph[^2]
+
+[^2]: Here is my second footnote
+
+I'm citing Sam [@csik2021]
+
+```{r}
+#| eval: true
+#| echo: false
+#| warning: false
+
+library(tidyverse)
+library(palmerpenguins)
+
+ggplot(penguins,
+       aes(x = bill_length_mm,
+           y = bill_depth_mm)) +
+  geom_point()
+```
+
+```{r}
+#| echo: false
+
+# knitr::include_graphics("horst-penguins.png")
+```
+
+
+practice citation[@gaynor2022]
