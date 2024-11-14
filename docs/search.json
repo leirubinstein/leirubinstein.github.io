@@ -12,5 +12,40 @@
     "title": "Leilanie Rubinstein",
     "section": "",
     "text": "Leilanie Rubinstein earned her Bachelor of Arts in Political Science and Environmental Studies from the University of California, Santa Barbara in 2021. Inspired by Santa Barbara’s legacy of environmental activism, Leilanie has dedicated herself to running local and federal campaigns with social justice and conservation-driven values for the past seven years. Following her undergraduate degree, she worked at an environmental law firm, specializing in litigation and regulatory disputes relating to remediation of Superfund sites. Her professional experience includes roles in political organizing, legislation, and environmental law, where she honed skills in data management, community engagement, and environmental policy analysis.\nCurrently pursuing a Master of Environmental Data Science at the Bren School, Leilanie aspires to work in government or to conduct policy relevant research after graduation. She aims to leverage data science techniques to develop solutions for resource management and climate change mitigation, promoting sustainable practices and enhancing climate resilience locally and globally.\nIn her free time, Leilanie enjoys mountain biking, gaming, and exploring nature and the night sky through her camera lens."
+  },
+  {
+    "objectID": "posts/2024-10-18-my-first-post/index.html",
+    "href": "posts/2024-10-18-my-first-post/index.html",
+    "title": "blog post title",
+    "section": "",
+    "text": "I’m going to insert a footnote here1"
+  },
+  {
+    "objectID": "posts/2024-10-18-my-first-post/index.html#this-is-my-first-section",
+    "href": "posts/2024-10-18-my-first-post/index.html#this-is-my-first-section",
+    "title": "blog post title",
+    "section": "",
+    "text": "I’m going to insert a footnote here1"
+  },
+  {
+    "objectID": "posts/2024-10-18-my-first-post/index.html#this-is-my-second-section",
+    "href": "posts/2024-10-18-my-first-post/index.html#this-is-my-second-section",
+    "title": "blog post title",
+    "section": "this is my second section",
+    "text": "this is my second section\nHere’s my next paragraph2\nI’m citing Sam [1]\n\n\n\n\n\n\n\n\n\npractice citation[2]"
+  },
+  {
+    "objectID": "posts/2024-10-18-my-first-post/index.html#footnotes",
+    "href": "posts/2024-10-18-my-first-post/index.html#footnotes",
+    "title": "blog post title",
+    "section": "Footnotes",
+    "text": "Footnotes\n\n\nHere is a new footnote↩︎\nHere is my second footnote↩︎"
+  },
+  {
+    "objectID": "photography.html",
+    "href": "photography.html",
+    "title": "Photography",
+    "section": "",
+    "text": "Santa Cruz Island, Channel Islands National Park\n\n\n\n\n\nPalm Springs, CA\n\n\n\n\n\nSanta Cruz Island, Channel Islands National Park\nPalm Springs, CA"
   }
 ]
