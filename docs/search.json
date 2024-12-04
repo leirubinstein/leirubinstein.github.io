@@ -4,7 +4,7 @@
     "href": "posts.html",
     "title": "Blog",
     "section": "",
-    "text": "Thomas Fire Perimeter Visualization\n\n\n\n\n\n\nPython\n\n\nMEDS\n\n\n\nTrue and false color visualization using Landsat data\n\n\n\n\n\nDec 4, 2024\n\n\nLeilanie Rubinstein\n\n\n\n\n\n\n\n\n\n\n\n\nblog post title\n\n\n\n\n\n\nQuarto\n\n\nMEDS\n\n\n\na short catchy description of the blog post\n\n\n\n\n\nOct 18, 2024\n\n\nLeilanie Rubinstein\n\n\n\n\n\n\nNo matching items"
+    "text": "Thomas Fire Perimeter Visualization\n\n\n\n\n\n\nPython\n\n\nMEDS\n\n\n\nTrue and false color visualization using Landsat data\n\n\n\n\n\nDec 4, 2024\n\n\nLeilanie Rubinstein\n\n\n\n\n\n\n\n\n\n\n\n\nPhoto Gallery\n\n\n\n\n\n\nQuarto\n\n\nPhotography\n\n\n\nsome photos I’ve taken recently \n\n\n\n\n\nOct 18, 2024\n\n\nLeilanie Rubinstein\n\n\n\n\n\n\nNo matching items"
   },
   {
     "objectID": "index.html",
@@ -65,30 +65,9 @@
   {
     "objectID": "posts/2024-10-18-my-first-post/index.html",
     "href": "posts/2024-10-18-my-first-post/index.html",
-    "title": "blog post title",
+    "title": "Photo Gallery",
     "section": "",
-    "text": "I’m going to insert a footnote here1"
-  },
-  {
-    "objectID": "posts/2024-10-18-my-first-post/index.html#this-is-my-first-section",
-    "href": "posts/2024-10-18-my-first-post/index.html#this-is-my-first-section",
-    "title": "blog post title",
-    "section": "",
-    "text": "I’m going to insert a footnote here1"
-  },
-  {
-    "objectID": "posts/2024-10-18-my-first-post/index.html#this-is-my-second-section",
-    "href": "posts/2024-10-18-my-first-post/index.html#this-is-my-second-section",
-    "title": "blog post title",
-    "section": "this is my second section",
-    "text": "this is my second section\nHere’s my next paragraph2\nI’m citing Sam [1]\n\n\n\n\n\n\n\n\n\npractice citation[2]"
-  },
-  {
-    "objectID": "posts/2024-10-18-my-first-post/index.html#footnotes",
-    "href": "posts/2024-10-18-my-first-post/index.html#footnotes",
-    "title": "blog post title",
-    "section": "Footnotes",
-    "text": "Footnotes\n\n\nHere is a new footnote↩︎\nHere is my second footnote↩︎"
+    "text": "CitationBibTeX citation:@online{rubinstein2024,\n  author = {Rubinstein, Leilanie},\n  title = {Photo {Gallery}},\n  date = {2024-10-18},\n  url = {https://leirubinstein.github.io/posts/2024-10-18-my-first-post/},\n  langid = {en}\n}\nFor attribution, please cite this work as:\nRubinstein L. Photo Gallery. 18 Oct 2024.\nAvailable: https://leirubinstein.github.io/posts/2024-10-18-my-first-post/"
   },
   {
     "objectID": "photography.html",
