@@ -15,7 +15,7 @@ csl: plos-computational-biology.csl
 image: DSC_9156.jpg
 citation:
   url: https://leirubinstein.github.io/posts/2024-10-18-my-first-post/
-draft: false
+draft: true
 draft-mode: visible
 # set draft to false when you want to post the page
 ---
