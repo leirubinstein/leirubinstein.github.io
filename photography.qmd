@@ -2,9 +2,18 @@
 title: "Photography"
 lightbox: true
 editor_options: 
-  chunk_output_type: console
+  chunk_output_type: inline
 ---
 
-![Santa Cruz Island, Channel Islands National Park](/media/photography/DSC_4341.jpg){group="my-gallery"}
+![Kelp forests at Santa Cruz Island, Channel Islands National Park](/media/photography/DSC_4341.jpg){group="my-gallery"}
 
-![Palm Springs, CA](/media/photography/DSC_9156.jpg){group="my-gallery"}
+![Dolphin breaching water in the Santa Barbara Channel, CA](/media/photography/DSC_9405.jpg){group="my-gallery"}
+
+![Dolphins in the Santa Barbara Channel, CA](/media/photography/DSC_9327.jpg){group="my-gallery"}
+
+![School of sardines in the Santa Barbara Channel, CA](/media/photography/DSC_9389.jpeg){group="my-gallery"}
+
+
+![Mount San Jacinto, Palm Springs, CA](/media/photography/DSC_9156.jpg){group="my-gallery"}
+
+![Windmills outside of Palm Springs, CA](/media/photography/DSC_9137.jpg){group="my-gallery"}

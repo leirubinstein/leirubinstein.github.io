@@ -1,0 +1,301 @@
+---
+title: "Ocean Chemistry and Santa Barbara Channel Macrocystis Pyrifera Populations"
+author: "Leilanie Rubinstein"
+date: last-modified
+description: "Investigating whether ocean chemistry has an impact on kelp forest biomass in the Santa Barbara Channel"
+format: html
+categories: [R, Marine, Statistical Analysis]
+image: DSC_4341.jpg
+editor: visual
+editor_options: 
+  chunk_output_type: console
+execute: 
+  warning: false
+  message: false
+code-fold: true
+---
+
+# Investigating Impacts of Ocean Chemistry on Santa Barbara Channel Macrocystis Pyrifera Populations
+
+## Background
+
+Santa Barbara's coastal waters host some of the most productive marine ecosystems on earth, *Macrocystis pyrifera*, or giant kelp forests. Kelp are a keystone species, and provide food, shelter and protection for all kinds of marine life, including commercially valuable fisheries. According to [NOAA](https://www.fisheries.noaa.gov/west-coast/habitat-conservation/kelp-forest-habitat-west-coast#:~:text=Kelps%20are%20found%20in%20subtidal,allow%20herbivorous%20populations%20to%20boom.), factors influencing kelp forest growth include nutrients, light levels, temperatures, and ocean currents. Research by [Smith et. al](https://aslopubs.onlinelibrary.wiley.com/doi/10.1002/lol2.10088) newly found that kelp use urea, in addition to ammonium, nitrate, dissolved organic nitrogen as nutrients for growth. 
+
+In this analysis, I would like to examine the relationship between ocean chemistry and kelp forest biomass, and develop a model for nutrient growth factors on biomass.
+
+*This exercise was produced as a part of the UCSB MEDS Program for EDS 222: Statistics for Environmental Data Science, taught by [Dr. Max Czapanskiy](https://bren.ucsb.edu/people/max-czapanskiy).*
+
+## Dataset Descriptions
+
+**1.  SBC LTER: Reef: Annual time series of biomass for kelp forest species, ongoing since 2000**
+
+-   These data are annual estimates of biomass of approximately 225 taxa of reef algae, invertebrates and fish in permanent transects at 11 kelp forest sites in the Santa Barbara Channel (2-8 transects per site). Abundance is measured annually (as percent cover or density, by size) and converted to biomass (i.e., wet mass, dry mass, decalcified dry mass, ash free dry mass) using published taxon-specific algorithms. Data collection began in summer 2000 and continues annually in summer to provide information on community structure, population dynamics and species change.
+
+![SBC LTER Reef Sites](species-sites.jpg)
+
+**2.  SBC LTER: Ocean: Ocean Currents and Biogeochemistry: Nearshore water profiles (monthly CTD and chemistry), ongoing since 2000**
+
+-   These data contain water chemistry measurements taken monthly at these reefs in the nearshore areas of the Santa Barbra Channel, CA, USA: Arroyo Quemado, Bullito, Naples, Arroyo Burro, Mohawk and Carpinteria. Measurements include standard CTD parameters, nutrients, pigments, particulate CN, total dissolved N and P, stable isotopes of C and N (not all parameters are measured at all stations). Sampling began in November 2000. Starting in February 2003, a SBE19-Plus with a rosette sampler was used. Some stations are sampled only occasionally.
+
+![SBC LTER Ocean Bottle Sites](ocean-chem-bottle-sites.jpg)
+
+```{r}
+library(tidyverse)
+library(here)
+library(readtext)
+library(janitor)
+
+theme_set(theme_bw())
+set.seed(42)
+```
+
+```{r}
+# Read in kelp and ocean chemistry data
+species <- read_csv(here::here(
+  "posts/2024-12-12-ocean-chem-kelp/data/Annual_All_Species_Biomass_at_transect_20240823.csv"), na = "-99999") %>%
+  janitor::clean_names()
+
+ocean_chem <- read.table(here::here("posts/2024-12-12-ocean-chem-kelp/data/LTER_monthly_bottledata_20240821.txt"), 
+  header = TRUE, sep = ";", na = c("BDL", "99999")) %>% # `BDL` = below detection level
+  janitor::clean_names()
+
+# Filter to Giant kelp (Macrocystis pyrifera)
+kelp <- species %>%
+  filter(scientific_name == "Macrocystis pyrifera")
+```
+
+The variables I plan to use for ocean chemistry are (in units of micromoles per liter):
+
+-   `no2_no3_umol_l` = concentration of the sum of nitrate and nitrite
+-   `pon_umol_l` = concentration of particulate organic nitrogen
+-   `tdn_umol_l`= concentration of dissolved nitrogen
+-   `ammonia_umol_l`= concentration of ammonium
+-   `urea_umol_l`= concentration of urea
+
+The variables I plan to use for kelp biomass are:
+
+-   `wm_gm2` = areal wet mass of individuals or colony in grams per square meter
+-   `density` = density taxon per squared meter in number per square meter
+
+*Note: there are other measures of biomass in `ocean_chem`. However, they are just linear transformations of wet mass.*
+
+## Clean data
+
+```{r}
+# Summarize kelp data to monthly averages
+monthly_kelp_data <- kelp %>%
+  group_by(year, month, site) %>%
+  summarise(across(where(is.numeric), mean, na.rm = TRUE)) %>%
+  mutate(date = as.Date(paste(year, month, "01", sep="-")))
+
+# Summarize ocean chem data to monthly averages
+monthly_ocean_data <- ocean_chem %>%
+  mutate(date = as.Date(yyyy_mm_dd),
+         year = lubridate::year(yyyy_mm_dd),
+         month = lubridate::month(yyyy_mm_dd)) %>%
+  mutate(site = case_when(
+    station %in% c("QI", "QM", "QO", "QR") ~ "AQUE", # match site names at both datasets
+    station %in% c("CI", "CO", "CR") ~ "CARP",
+    station %in% c("MI", "MK") ~ "MOHK",
+    station %in% c("NI", "NO", "NR") ~ "NAPL",
+    station %in% c("BI", "BO", "BR") ~ "BULL",
+    station %in% c("AB") ~ "ABUR"
+  )) %>%
+  group_by(year, month, site) %>%
+  summarise(
+    across(where(is.numeric), mean),
+    n = dplyr::n()) %>%
+  mutate(date = as.Date(paste(year, month, "01", sep="-")))
+
+# Plot monthly average weight data
+ggplot(monthly_kelp_data, aes(date, wm_gm2)) +
+  geom_line(color = "#6d8c23") +
+  geom_point() +
+  facet_wrap(~site) +
+  scale_x_date(date_breaks = "4 years",
+               date_labels = "%Y") +
+  labs(title = "Monthly Average Giant Kelp Biomass by Site",
+       x = "Date",
+       y = "Wet Mass (g/m²)") +
+  theme(axis.text.x = element_text(size = 6), angle = 45, hjust = 1)
+
+# Check which sites have monthly ocean chemistry data
+ggplot(monthly_ocean_data, aes(date, n)) +
+  geom_line(color = "#6d8c23") +
+  geom_point(size = 0.1) +
+  facet_wrap(~site) +
+  scale_x_date(date_breaks = "4 years",
+               date_labels = "%Y") +
+  scale_y_continuous(expand = expansion(c(0, 0))) +
+  labs(title = "Number of Ocean Chemistry Measurements by Site",
+       x = "Date",
+       y = "Number of Measurements") +
+  theme(axis.text.x = element_text(size = 6), angle = 45, hjust = 1)
+
+```
+
+Note that there is a significant amount of missing data.
+
+```{r}
+# Join kelp and ocean chemistry datasets
+joined_data <- left_join(
+  monthly_kelp_data, 
+  monthly_ocean_data, 
+  by = join_by(year, month, site, date)) %>% 
+  mutate(
+    site = as.factor(site),
+    pon_umol_l_log = log1p(pon_umol_l),
+    wm_gm2_log = log1p(wm_gm2))
+```
+
+After grouping and summarizing the data, we are left with very few data points. There are NO instances that account for all of the ocean chemistry and kelp biomass variables initially identified for analysis.
+
+Looking at the joined data, the column with the most complete data from the original variables seems to be `pon_umol_l`.
+
+## Visualize data
+
+```{r}
+# Plot wet weight as a function of time
+ggplot(joined_data, aes(date, wm_gm2)) +
+  geom_line(color = "#6d8c23") +
+  geom_point(size = 0.1) +
+  facet_wrap(~site) +
+  scale_x_date(date_breaks = "4 years",
+               date_labels = "%Y") +
+  scale_y_continuous(expand = expansion(c(0, 0))) +
+  labs(title = "Giant Kelp Wet Mass Over Time by Site",
+       x = "Date", 
+       y = "Wet Mass (g/m²)") +
+  theme(axis.text.x = element_text(size = 6), angle = 45, hjust = 1)
+
+# Plot particulate organic nitrogen concentration as a function of time
+ggplot(joined_data, aes(date, pon_umol_l)) +
+  geom_line(color = "#6d8c23") +
+  geom_point(size = 0.1) +
+  facet_wrap(~site) +
+  scale_x_date(date_breaks = "4 years",
+               date_labels = "%Y") +
+  scale_y_continuous(expand = expansion(c(0, 0))) +
+  labs(title = "Particulate Organic Nitrogen Concentration Over Time by Site",
+       x = "Date",
+       y = "PON Concentration (μmol/L)") +
+  theme(axis.text.x = element_text(size = 6), angle = 45, hjust = 1)
+
+# Plot particulate organic nitrogen as a function of wet mass
+ggplot(joined_data, aes(wm_gm2, pon_umol_l)) +
+  geom_point(size = 1,
+             color = "#6d8c23") +
+  facet_wrap(~site) +
+  scale_y_continuous(expand = expansion(c(0, 0))) +
+  labs(title = "PON Concentration vs Kelp Biomass by Site",
+       x = "Wet Mass (g/m²)",
+       y = "PON Concentration (μmol/L)")
+
+# Plot particulate organic nitrogen as a function of log wet mass
+ggplot(joined_data, aes(wm_gm2_log, pon_umol_l)) +
+  geom_point(size = 1,
+             color = "#6d8c23") +
+  facet_wrap(~site) +
+  scale_y_continuous(expand = expansion(c(0, 0))) +
+  labs(title = "PON Concentration vs Log Kelp Biomass by Site",
+       x = "Log Wet Mass (g/m²)",
+       y = "PON Concentration (μmol/L)")
+```
+
+## Run models
+
+Is there a relationship between biomass and particulate organic nitrogen (PON) concentration?
+
+```{r}
+# 1. Biomass and particulate organic nitrogen
+model_wm <- lm(formula = wm_gm2 ~ pon_umol_l + site, 
+               data = joined_data) 
+model_wm %>% 
+  summary()
+
+# 2. Log biomass and particulate organic nitrogen
+model_wm_log <- lm(formula = wm_gm2_log ~ pon_umol_l + site, 
+                   data = joined_data) 
+model_wm_log %>% 
+  summary()
+
+# 3. Density and particulate organic nitrogen
+model_wm_density <- lm(formula = density ~ pon_umol_l + site, 
+                       data = joined_data) 
+model_wm_density %>% 
+  summary()
+```
+
+**1. Biomass Model `model_wm`**
+
+There is a significant positive relationship between PON and kelp biomass (p = 0.00749). For every one μmol/L increase in PON concentration, kelp wet mass increases by 147.54 grams/square meter when the reference site is `BULL`. Consistent with the "Monthly Average Giant Kelp Biomass by Site" plot, the `MOHK` site has significantly higher biomass than the other sites (coef = 3187.67, p = 1.46e-5). The model explains about 32.4% of the variation in biomass (not great).
+
+**2. Log Biomass Model `model_wm_log`**
+
+There is a marginally significant positive relationship between PON and log-transformed kelp biomass (p = 0.080). For every one μmol/L increase in PON concentration, log kelp wet mass increases by 0.068 units when the reference site is `BULL`. The `ABUR` site shows significantly lower biomass (coef = -1.389, p = 0.006) while `MOHK` shows significantly higher biomass (coef = 1.498, p = 0.003) compared to other sites. The model explains about 26.1% of the variation in log biomass (poor fit).
+
+**3. Biomass Density Model `model_wm_density`**
+
+There is a significant positive relationship between PON and kelp density (p = 0.002). For every one μmol/L increase in PON concentration, kelp density increases by 0.317 individuals per square meter when the reference site is `BULL`. Similar to the biomass models, the `MOHK` site shows significantly higher density than other sites (coef = 7.853, p \< 0.001). This model has the best fit of the three, explaining about 43.3% of the variation in density, but still is not great.
+
+## Randomization test
+
+Hypotheses:
+
+-   *H~0~*: Particulate organic nitrogen has no effect on kelp biomass
+-   *H~A~*: Particulate organic nitrogen has an effect on kelp biomass
+
+```{r}
+# Get observed coefficient for pon_umol_l
+observed_coef <- coef(summary(model_wm))["pon_umol_l", "t value"]
+
+# Create randomizations
+null_dist <- replicate(1000, {
+  rand_joined_data <- joined_data %>% 
+    ungroup() %>% 
+    mutate(pon_umol_l = sample(pon_umol_l))
+  
+  rand_model <- lm(wm_gm2 ~ pon_umol_l + site, data = rand_joined_data)
+  coef(summary(rand_model))["pon_umol_l", "t value"]
+})
+
+# Calculate p-value (two-sided test)
+p_value <- mean(abs(null_dist) >= abs(observed_coef))
+
+# Plot the null distribution
+null_dist_df <- data.frame(t_stat = null_dist)
+ggplot(null_dist_df, aes(x = t_stat)) +
+  geom_histogram(binwidth = 0.2, 
+                 fill = "#6d8c23", 
+                 color = "white") +
+  geom_vline(xintercept = observed_coef, color = "orchid", linewidth = 1) +
+  labs(title = "Null Distribution of PON Coefficient t-statistics",
+       x = "t-statistic",
+       y = "Count")
+
+cat("Randomization test p-value:", p_value, "\n")
+cat("Observed t-statistic:", observed_coef, "\n")
+```
+
+This randomization test shuffled the data n = 1000 times to determine what the point estimate (t-statistic) would be if it occurred by chance. 0nly 0.3% of the time would a value of t = 2.37 be produced as chance. At a threshold of alpha = 0.05, we can reject our null hypothesis and state that PON has a positive effect on kelp wet mass.
+
+The observed t-statistic is 2.73, which means that the estimated coefficient is 2.73 standard errors away from zero. In the figure, the null distribution shows us what we would expect if there was no relationship between PON and biomass (measured by density). The purple line falls outside of the majority of the distribution, which tells us that there is a strong relationship between PON and density.
+
+## Conclusion
+
+Due to incomplete data, I could not perform my intended analysis. The ocean chemistry and kelp data were inconsistently collected across sites and months, leaving very few usable data points after cleaning.
+
+The model likely suffers from omitted variable bias. While prior research has established that temperature, currents, and light levels affect kelp growth, my model only included PON and site as variables, excluding other nutrients and physical variables.
+
+Autocorrelation may have affected the results because samples were taken at monthly intervals, and ecological conditions typically carry over from one month to the next. This violation of independence could lead to underestimated standard errors and overstated significance in the statistical results. However, techniques to reduce autocorrelation, such as a temporal lag model, were not feasible given the substantial missing data, which included gaps of several months in the joined dataset.
+
+Overall, **the results of my models should not be considered reliable** due to the significant data gaps. I had overestimated the completeness of the LTER data for this research question.
+
+For future research, I would like to analyze Thomas Fire effects on kelp growth using a more complete ocean chemistry dataset. Researchers at UCSB discovered that wildfire ash from the 2017 Thomas Fire [resulted in significant additions of dissolved nutrients](https://royalsocietypublishing.org/doi/10.1098/rspb.2023.1817), including inorganic and organic nitrogen, silicic acid, metals, and organic carbon. Furthermore, this ash leachate resulted in an increase of relative abundance of eukaryotic phytoplankton. Since the impacts of wildfire products on Macrocystis pyrifera remain understudied, this could be a valuable area for investigation. Additional factors to consider would include kelp recruitment rates using a temporal lag model and dissolved metal concentrations.
+
+## Data Citations
+
+| Data | Citation | Link |
+|----------------|----------------------------------------|----------------|
+| SBC LTER: Ocean: Ocean Currents and Biogeochemistry: Nearshore water profiles (monthly CTD and chemistry), ongoing since 2000 | Washburn, L., M. Brzezinski, C. Carlson, and D. Siegel. 2024. SBC LTER: Ocean: Ocean Currents and Biogeochemistry: Nearshore water profiles (monthly CTD and chemistry), ongoing since 2000 ver 31. Environmental Data Initiative. https://doi.org/10.6073/pasta/cc75e947e0137e1594ebd8ce4b4a8880 (Accessed 2024-12-09). | <https://portal.edirepository.org/nis/mapbrowse?packageid=knb-lter-sbc.10.31> |
+| SBC LTER: Reef: Annual time series of biomass for kelp forest species, ongoing since 2000                                     | Reed, D. and R. Miller. 2024. SBC LTER: Reef: Annual time series of biomass for kelp forest species, ongoing since 2000 ver 17. Environmental Data Initiative. https://doi.org/10.6073/pasta/6587ad06e299e566e2092d1268dc206b (Accessed 2024-12-10).                                                                     | <https://portal.edirepository.org/nis/mapbrowse?packageid=knb-lter-sbc.50.17> |
