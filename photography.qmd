@@ -13,7 +13,6 @@ editor_options:
 
 ![School of sardines in the Santa Barbara Channel, CA](media/photography/DSC_9389.jpeg){group="my-gallery"}
 
-
 ![Mount San Jacinto, Palm Springs, CA](media/photography/DSC_9156.jpg){group="my-gallery"}
 
 ![Windmills outside of Palm Springs, CA](media/photography/DSC_9137.jpg){group="my-gallery"}
