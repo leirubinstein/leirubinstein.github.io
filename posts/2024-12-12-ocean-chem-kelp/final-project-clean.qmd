@@ -19,7 +19,7 @@ code-fold: true
 
 ## Background
 
-Santa Barbara's coastal waters host some of the most productive marine ecosystems on earth, *Macrocystis pyrifera*, or giant kelp forests. Kelp are a keystone species, and provide food, shelter and protection for all kinds of marine life, including commercially valuable fisheries. According to [NOAA](https://www.fisheries.noaa.gov/west-coast/habitat-conservation/kelp-forest-habitat-west-coast#:~:text=Kelps%20are%20found%20in%20subtidal,allow%20herbivorous%20populations%20to%20boom.), factors influencing kelp forest growth include nutrients, light levels, temperatures, and ocean currents. Research by [Smith et. al](https://aslopubs.onlinelibrary.wiley.com/doi/10.1002/lol2.10088) newly found that kelp use urea, in addition to ammonium, nitrate, dissolved organic nitrogen as nutrients for growth. 
+Santa Barbara's coastal waters host some of the most productive marine ecosystems on earth, *Macrocystis pyrifera*, or giant kelp forests. Kelp are a keystone species, and provide food, shelter and protection for all kinds of marine life, including commercially valuable fisheries. According to [NOAA](https://www.fisheries.noaa.gov/west-coast/habitat-conservation/kelp-forest-habitat-west-coast#:~:text=Kelps%20are%20found%20in%20subtidal,allow%20herbivorous%20populations%20to%20boom.), factors influencing kelp forest growth include nutrients, light levels, temperatures, and ocean currents. Research by [Smith et. al](https://aslopubs.onlinelibrary.wiley.com/doi/10.1002/lol2.10088) newly found that kelp use urea, in addition to ammonium, nitrate, dissolved organic nitrogen as nutrients for growth.
 
 In this analysis, I would like to examine the relationship between ocean chemistry and kelp forest biomass, and develop a model for nutrient growth factors on biomass.
 
@@ -27,13 +27,13 @@ In this analysis, I would like to examine the relationship between ocean chemist
 
 ## Dataset Descriptions
 
-**1.  SBC LTER: Reef: Annual time series of biomass for kelp forest species, ongoing since 2000**
+**1. SBC LTER: Reef: Annual time series of biomass for kelp forest species, ongoing since 2000**
 
 -   These data are annual estimates of biomass of approximately 225 taxa of reef algae, invertebrates and fish in permanent transects at 11 kelp forest sites in the Santa Barbara Channel (2-8 transects per site). Abundance is measured annually (as percent cover or density, by size) and converted to biomass (i.e., wet mass, dry mass, decalcified dry mass, ash free dry mass) using published taxon-specific algorithms. Data collection began in summer 2000 and continues annually in summer to provide information on community structure, population dynamics and species change.
 
 ![SBC LTER Reef Sites](species-sites.jpg)
 
-**2.  SBC LTER: Ocean: Ocean Currents and Biogeochemistry: Nearshore water profiles (monthly CTD and chemistry), ongoing since 2000**
+**2. SBC LTER: Ocean: Ocean Currents and Biogeochemistry: Nearshore water profiles (monthly CTD and chemistry), ongoing since 2000**
 
 -   These data contain water chemistry measurements taken monthly at these reefs in the nearshore areas of the Santa Barbra Channel, CA, USA: Arroyo Quemado, Bullito, Naples, Arroyo Burro, Mohawk and Carpinteria. Measurements include standard CTD parameters, nutrients, pigments, particulate CN, total dissolved N and P, stable isotopes of C and N (not all parameters are measured at all stations). Sampling began in November 2000. Starting in February 2003, a SBE19-Plus with a rosette sampler was used. Some stations are sampled only occasionally.
 
@@ -295,7 +295,7 @@ For future research, I would like to analyze Thomas Fire effects on kelp growth 
 
 ## Data Citations
 
-| Data | Citation | Link |
-|----------------|----------------------------------------|----------------|
+| Data                                                                                                                          | Citation                                                                                                                                                                                                                                                                                                                 | Link                                                                          |
+|-----------------|--------------------------------------|-----------------|
 | SBC LTER: Ocean: Ocean Currents and Biogeochemistry: Nearshore water profiles (monthly CTD and chemistry), ongoing since 2000 | Washburn, L., M. Brzezinski, C. Carlson, and D. Siegel. 2024. SBC LTER: Ocean: Ocean Currents and Biogeochemistry: Nearshore water profiles (monthly CTD and chemistry), ongoing since 2000 ver 31. Environmental Data Initiative. https://doi.org/10.6073/pasta/cc75e947e0137e1594ebd8ce4b4a8880 (Accessed 2024-12-09). | <https://portal.edirepository.org/nis/mapbrowse?packageid=knb-lter-sbc.10.31> |
 | SBC LTER: Reef: Annual time series of biomass for kelp forest species, ongoing since 2000                                     | Reed, D. and R. Miller. 2024. SBC LTER: Reef: Annual time series of biomass for kelp forest species, ongoing since 2000 ver 17. Environmental Data Initiative. https://doi.org/10.6073/pasta/6587ad06e299e566e2092d1268dc206b (Accessed 2024-12-10).                                                                     | <https://portal.edirepository.org/nis/mapbrowse?packageid=knb-lter-sbc.50.17> |

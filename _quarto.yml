@@ -6,6 +6,8 @@ website:
   title: "Leilanie Rubinstein"
   favicon: images/moon-regular.svg
   navbar:
+    title: "Leilanie Rubinstein"
+    logo: images/logo-1-web-color.png
     left:
       - href: index.qmd
         text: Home
