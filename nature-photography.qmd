@@ -1,5 +1,5 @@
 ---
-title: "Photography"
+title: "Nature Photography"
 lightbox: true
 editor_options: 
   chunk_output_type: inline

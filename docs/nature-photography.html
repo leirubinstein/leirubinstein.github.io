@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Blog – Leilanie Rubinstein</title>
+<title>Nature Photography – Leilanie Rubinstein</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -31,8 +31,6 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
 <link href="./images/moon-regular.svg" rel="icon" type="image/svg+xml">
-<script src="site_libs/quarto-listing/list.min.js"></script>
-<script src="site_libs/quarto-listing/quarto-listing.js"></script>
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -44,6 +42,9 @@ ul.task-list li input[type="checkbox"] {
 <link href="site_libs/bootstrap/bootstrap-f0ca5a01a3d1105937cc0ce3a90145d7.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <link href="site_libs/quarto-contrib/fontawesome6-0.1.0/all.css" rel="stylesheet">
 <link href="site_libs/quarto-contrib/fontawesome6-0.1.0/latex-fontsize.css" rel="stylesheet">
+<script src="site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
+<link href="site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
+<link href="site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -71,65 +72,7 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
-<script>
 
-  window.document.addEventListener("DOMContentLoaded", function (_event) {
-    const listingTargetEl = window.document.querySelector('#listing-listing .list');
-    if (!listingTargetEl) {
-      // No listing discovered, do not attach.
-      return; 
-    }
-
-    const options = {
-      valueNames: ['listing-date','listing-title','listing-author','listing-image','listing-description','listing-categories',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
-      
-      searchColumns: ["listing-date","listing-title","listing-author","listing-image","listing-description","listing-categories"],
-    };
-
-    window['quarto-listings'] = window['quarto-listings'] || {};
-    window['quarto-listings']['listing-listing'] = new List('listing-listing', options);
-
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  });
-
-  window.addEventListener('hashchange',() => {
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  })
-  </script>
-
-  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
-
-<script type="text/javascript">
-const typesetMath = (el) => {
-  if (window.MathJax) {
-    // MathJax Typeset
-    window.MathJax.typeset([el]);
-  } else if (window.katex) {
-    // KaTeX Render
-    var mathElements = el.getElementsByClassName("math");
-    var macros = [];
-    for (var i = 0; i < mathElements.length; i++) {
-      var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN") {
-        window.katex.render(texText.data, mathElements[i], {
-          displayMode: mathElements[i].classList.contains('display'),
-          throwOnError: false,
-          macros: macros,
-          fleqn: false
-        });
-      }
-    }
-  }
-}
-window.Quarto = {
-  typesetMath
-};
-</script>
 
 </head>
 
@@ -162,11 +105,11 @@ window.Quarto = {
 <span class="menu-text">About Me</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link active" href="./posts.html" aria-current="page"> 
+    <a class="nav-link" href="./posts.html"> 
 <span class="menu-text">Blog</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./nature-photography.html"> 
+    <a class="nav-link active" href="./nature-photography.html" aria-current="page"> 
 <span class="menu-text">Nature Photography</span></a>
   </li>  
   <li class="nav-item">
@@ -184,20 +127,20 @@ window.Quarto = {
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
         
-    <h5 class="quarto-listing-category-title">Categories</h5><div class="quarto-listing-category category-default"><div class="category" data-category="">All <span class="quarto-category-count">(3)</span></div><div class="category" data-category="R2Vvc3BhdGlhbCUyMEFuYWx5c2lz">Geospatial Analysis <span class="quarto-category-count">(1)</span></div><div class="category" data-category="TUVEUw==">MEDS <span class="quarto-category-count">(1)</span></div><div class="category" data-category="TWFyaW5l">Marine <span class="quarto-category-count">(2)</span></div><div class="category" data-category="UHl0aG9u">Python <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Ug==">R <span class="quarto-category-count">(2)</span></div><div class="category" data-category="U3RhdGlzdGljYWwlMjBBbmFseXNpcw==">Statistical Analysis <span class="quarto-category-count">(1)</span></div></div></div>
+    </div>
 <!-- main -->
-<main class="content column-page-left" id="quarto-document-content">
+<main class="content column-page" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Blog</h1>
+<h1 class="title">Nature Photography</h1>
 </div>
 
 
 
-<div class="quarto-title-meta column-page-left">
+<div class="quarto-title-meta column-page">
 
     
   
@@ -209,131 +152,46 @@ window.Quarto = {
 </header>
 
 
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="media/DSC_4341.jpg" class="lightbox" data-gallery="my-gallery" title="Kelp forests at Santa Cruz Island, Channel Islands National Park"><img src="media/DSC_4341.jpg" class="img-fluid figure-img" alt="Kelp forests at Santa Cruz Island, Channel Islands National Park"></a></p>
+<figcaption>Kelp forests at Santa Cruz Island, Channel Islands National Park</figcaption>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="media/DSC_9405.jpg" class="lightbox" data-gallery="my-gallery" title="Dolphin breaching water in the Santa Barbara Channel, CA"><img src="media/DSC_9405.jpg" class="img-fluid figure-img" alt="Dolphin breaching water in the Santa Barbara Channel, CA"></a></p>
+<figcaption>Dolphin breaching water in the Santa Barbara Channel, CA</figcaption>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="media/DSC_9327.jpg" class="lightbox" data-gallery="my-gallery" title="Dolphins in the Santa Barbara Channel, CA"><img src="media/DSC_9327.jpg" class="img-fluid figure-img" alt="Dolphins in the Santa Barbara Channel, CA"></a></p>
+<figcaption>Dolphins in the Santa Barbara Channel, CA</figcaption>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="media/DSC_9389.jpeg" class="lightbox" data-gallery="my-gallery" title="School of sardines in the Santa Barbara Channel, CA"><img src="media/DSC_9389.jpeg" class="img-fluid figure-img" alt="School of sardines in the Santa Barbara Channel, CA"></a></p>
+<figcaption>School of sardines in the Santa Barbara Channel, CA</figcaption>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="media/DSC_9156.jpg" class="lightbox" data-gallery="my-gallery" title="Mount San Jacinto, Palm Springs, CA"><img src="media/DSC_9156.jpg" class="img-fluid figure-img" alt="Mount San Jacinto, Palm Springs, CA"></a></p>
+<figcaption>Mount San Jacinto, Palm Springs, CA</figcaption>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="media/DSC_9137.jpg" class="lightbox" data-gallery="my-gallery" title="Windmills outside of Palm Springs, CA"><img src="media/DSC_9137.jpg" class="img-fluid figure-img" alt="Windmills outside of Palm Springs, CA"></a></p>
+<figcaption>Windmills outside of Palm Springs, CA</figcaption>
+</figure>
+</div>
 
 
 
-
-<div class="quarto-listing quarto-listing-container-default" id="listing-listing">
-<div class="list quarto-listing-default">
-<div class="quarto-post image-right" data-index="0" data-categories="UiUyQ01hcmluZSUyQ1N0YXRpc3RpY2FsJTIwQW5hbHlzaXM=" data-listing-date-sort="1735078632000" data-listing-file-modified-sort="1735078632759" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="15" data-listing-word-count-sort="2987">
-<div class="thumbnail">
-<p><a href="./posts/2024-12-12-ocean-chem-kelp/final-project-clean.html" class="no-external"></a></p><a href="./posts/2024-12-12-ocean-chem-kelp/final-project-clean.html" class="no-external">
-<p><img loading="lazy" src="./posts/2024-12-12-ocean-chem-kelp/DSC_4341.jpg" class="thumbnail-image"></p>
-</a><p><a href="./posts/2024-12-12-ocean-chem-kelp/final-project-clean.html" class="no-external"></a></p>
-</div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./posts/2024-12-12-ocean-chem-kelp/final-project-clean.html" class="no-external">Ocean Chemistry and Santa Barbara Channel Macrocystis Pyrifera Populations</a>
-</h3>
-<div class="listing-subtitle">
-<a href="./posts/2024-12-12-ocean-chem-kelp/final-project-clean.html" class="no-external"></a>
-</div>
-<div class="listing-categories">
-<div class="listing-category" onclick="window.quartoListingCategory('Ug=='); return false;">
-R
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('TWFyaW5l'); return false;">
-Marine
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('U3RhdGlzdGljYWwlMjBBbmFseXNpcw=='); return false;">
-Statistical Analysis
-</div>
-</div>
-<div class="listing-description">
-<a href="./posts/2024-12-12-ocean-chem-kelp/final-project-clean.html" class="no-external">Investigating whether ocean chemistry has an impact on kelp forest biomass in the Santa Barbara Channel</a>
-</div>
-</div>
-<div class="metadata">
-<a href="./posts/2024-12-12-ocean-chem-kelp/final-project-clean.html" class="no-external">
-<div class="listing-date">
-Dec 24, 2024
-</div>
-<div class="listing-author">
-Leilanie Rubinstein
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="1" data-categories="UiUyQ01hcmluZSUyQ0dlb3NwYXRpYWwlMjBBbmFseXNpcw==" data-listing-date-sort="1735078630000" data-listing-file-modified-sort="1735078630325" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="12" data-listing-word-count-sort="2323">
-<div class="thumbnail">
-<p><a href="./posts/2024-12-24-aquaculture-suitability/suitable-aquaculture.html" class="no-external"></a></p><a href="./posts/2024-12-24-aquaculture-suitability/suitable-aquaculture.html" class="no-external">
-<p class="card-img-top"><img src="posts/2024-12-24-aquaculture-suitability/suitable-aquaculture_files/figure-html/unnamed-chunk-8-1.png"  class="thumbnail-image card-img"/></p>
-</a><p><a href="./posts/2024-12-24-aquaculture-suitability/suitable-aquaculture.html" class="no-external"></a></p>
-</div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./posts/2024-12-24-aquaculture-suitability/suitable-aquaculture.html" class="no-external">Aquaculture Suitability Map</a>
-</h3>
-<div class="listing-subtitle">
-<a href="./posts/2024-12-24-aquaculture-suitability/suitable-aquaculture.html" class="no-external"></a>
-</div>
-<div class="listing-categories">
-<div class="listing-category" onclick="window.quartoListingCategory('Ug=='); return false;">
-R
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('TWFyaW5l'); return false;">
-Marine
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('R2Vvc3BhdGlhbCUyMEFuYWx5c2lz'); return false;">
-Geospatial Analysis
-</div>
-</div>
-<div class="listing-description">
-<a href="./posts/2024-12-24-aquaculture-suitability/suitable-aquaculture.html" class="no-external">Determining and visualizing which West Coast EEZs are best suited to developing species-specific marine aquaculture</a>
-</div>
-</div>
-<div class="metadata">
-<a href="./posts/2024-12-24-aquaculture-suitability/suitable-aquaculture.html" class="no-external">
-<div class="listing-date">
-Dec 24, 2024
-</div>
-<div class="listing-author">
-Leilanie Rubinstein
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="2" data-categories="UHl0aG9uJTJDTUVEUw==" data-listing-date-sort="1734076800000" data-listing-file-modified-sort="1734157734099" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="7" data-listing-word-count-sort="1391">
-<div class="thumbnail">
-<p><a href="./posts/2024-12-04-thomas-fire-visualization/thomas-fire-blogpost.html" class="no-external"></a></p><a href="./posts/2024-12-04-thomas-fire-visualization/thomas-fire-blogpost.html" class="no-external">
-<p><img loading="lazy" src="./posts/2024-12-04-thomas-fire-visualization/perimeter-screenshot.png" class="thumbnail-image"></p>
-</a><p><a href="./posts/2024-12-04-thomas-fire-visualization/thomas-fire-blogpost.html" class="no-external"></a></p>
-</div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./posts/2024-12-04-thomas-fire-visualization/thomas-fire-blogpost.html" class="no-external">Thomas Fire: Perimeter Visualization &amp; Land Cover Statistics</a>
-</h3>
-<div class="listing-subtitle">
-<a href="./posts/2024-12-04-thomas-fire-visualization/thomas-fire-blogpost.html" class="no-external"></a>
-</div>
-<div class="listing-categories">
-<div class="listing-category" onclick="window.quartoListingCategory('UHl0aG9u'); return false;">
-Python
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('TUVEUw=='); return false;">
-MEDS
-</div>
-</div>
-<div class="listing-description">
-<a href="./posts/2024-12-04-thomas-fire-visualization/thomas-fire-blogpost.html" class="no-external">True and false color visualization using Landsat data</a>
-</div>
-</div>
-<div class="metadata">
-<a href="./posts/2024-12-04-thomas-fire-visualization/thomas-fire-blogpost.html" class="no-external">
-<div class="listing-date">
-Dec 13, 2024
-</div>
-<div class="listing-author">
-Leilanie Rubinstein
-</div>
-</a>
-</div>
-</div>
-</div>
-<div class="listing-no-matching d-none">
-No matching items
-</div>
-</div></main> <!-- /main -->
+</main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
@@ -765,6 +623,38 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </div>
   </div>
 </footer>
+<script>var lightboxQuarto = GLightbox({"closeEffect":"zoom","descPosition":"bottom","loop":false,"openEffect":"zoom","selector":".lightbox"});
+(function() {
+  let previousOnload = window.onload;
+  window.onload = () => {
+    if (previousOnload) {
+      previousOnload();
+    }
+    lightboxQuarto.on('slide_before_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      const href = trigger.getAttribute('href');
+      if (href !== null) {
+        const imgEl = window.document.querySelector(`a[href="${href}"] img`);
+        if (imgEl !== null) {
+          const srcAttr = imgEl.getAttribute("src");
+          if (srcAttr && srcAttr.startsWith("data:")) {
+            slideConfig.href = srcAttr;
+          }
+        }
+      } 
+    });
+  
+    lightboxQuarto.on('slide_after_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(slideNode);
+      }
+    });
+  
+  };
+  
+})();
+          </script>
 
 
 

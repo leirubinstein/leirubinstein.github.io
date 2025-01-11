@@ -1,0 +1,36 @@
+---
+title: "Portrait Photography"
+lightbox: true
+editor_options: 
+  chunk_output_type: inline
+---
+
+## Portraits
+
+![](media/DSC_4024.jpg){group="my-gallery"}
+
+![](media/DSC_3821.jpg){group="my-gallery"}
+
+![](media/DSC_8170.jpg){group="my-gallery"}
+
+![](media/DSC_3774.jpg){group="my-gallery"}
+
+![](media/DSC_8476.jpg){group="my-gallery"}
+
+## Graduates
+
+![](media/_DSC6356.jpg){group="my-gallery"}
+
+![](media/DSC_1744.jpg){group="my-gallery"}
+
+![](media/DSC_7832-2.jpg){group="my-gallery"}
+
+![](media/DSC_7832-2){group="my-gallery"}
+
+![](media/DSC_8226-2-2.jpg){group="my-gallery"}
+
+![](media/DSC_0494.jpg){group="my-gallery"}
+
+![](media/DSC_2101.jpg){group="my-gallery"}
+
+![](media/_DSC7960-Edit.jpg){group="my-gallery"}
