@@ -16,3 +16,10 @@ editor_options:
 ![Mount San Jacinto, Palm Springs, CA](media/DSC_9156.jpg){group="my-gallery"}
 
 ![Windmills outside of Palm Springs, CA](media/DSC_9137.jpg){group="my-gallery"}
+
+![Sunset from More Mesa, Santa Barbara, CA](media/DSC_0681.jpg){group="my-gallery"}
+
+![UCSB Lagoon, Santa Barbara, CA](media/_DSC2631.jpg){group="my-gallery"}
+
+![Dead Sea sunrise from Masada, Israel](media/DSC_7873.jpg){group="my-gallery"}
+
