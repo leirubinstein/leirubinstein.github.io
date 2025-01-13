@@ -5,6 +5,8 @@ editor_options:
   chunk_output_type: inline
 ---
 
+Please email leilanierubinstein@gmail.com for booking and inquiries.
+
 ## Portraits
 
 ![](media/DSC_4024.jpg){group="my-gallery"}
@@ -24,8 +26,6 @@ editor_options:
 ![](media/DSC_1744.jpg){group="my-gallery"}
 
 ![](media/DSC_7832-2.jpg){group="my-gallery"}
-
-![](media/DSC_7832-2){group="my-gallery"}
 
 ![](media/DSC_8226-2-2.jpg){group="my-gallery"}
 
