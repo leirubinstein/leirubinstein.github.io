@@ -272,9 +272,9 @@ suitable_aquaculture(10, 30, 3, 26, "Pteria sterna")
 
 # Data Citations
 
-| Data                    | Citation                                                                                                                     | Link                                                                                    |
-|------------------------|------------------------|------------------------|
-| Sea Surface Temperature | NOAA Coral Reef Watch (2018). NOAA Coral Reef Watch Daily Global 5-km Satellite Sea Surface Temperature Anomaly Product v3.1 | <https://coralreefwatch.noaa.gov/product/5km/index_5km_ssta.php>                        |
-| Bathymetry              | GEBCO Compilation Group (2022) GEBCO_2022 Grid (doi:10.5285/e0f0bb80-ab44-2739-e053-6c86abc0289c)                            | <https://www.gebco.net/data_and_products/gridded_bathymetry_data/#area>                 |
-| EEZ Boundaries          | Marine Regions - Maritime Boundaries and Exclusive Economic Zones, 2019                                                      | <https://www.marineregions.org/eez.php>                                                 |
-| State Boundaries        | U.S. Census Bureau TIGER/Line Shapefiles, 2023                                                                               | <https://www.census.gov/geographies/mapping-files/time-series/geo/tiger-line-file.html> |
+| Data | Citation | Link |
+|----|----|----|
+| Sea Surface Temperature | NOAA Coral Reef Watch (2018). NOAA Coral Reef Watch Daily Global 5-km Satellite Sea Surface Temperature Anomaly Product v3.1 | <https://coralreefwatch.noaa.gov/product/5km/index_5km_ssta.php> |
+| Bathymetry | GEBCO Compilation Group (2022) GEBCO_2022 Grid (doi:10.5285/e0f0bb80-ab44-2739-e053-6c86abc0289c) | <https://www.gebco.net/data_and_products/gridded_bathymetry_data/#area> |
+| EEZ Boundaries | Marine Regions - Maritime Boundaries and Exclusive Economic Zones, 2019 | <https://www.marineregions.org/eez.php> |
+| State Boundaries | U.S. Census Bureau TIGER/Line Shapefiles, 2023 | <https://www.census.gov/geographies/mapping-files/time-series/geo/tiger-line-file.html> |
