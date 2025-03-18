@@ -1,0 +1,909 @@
+---
+title: "Voter Registration Data Infographic"
+author: "Leilanie Rubinstein"
+date: "2025-03-17"
+description: "Visualizing partisan trends using Santa Barbara County voter registration data"
+toc: true
+categories: [R, Data Visualization, Spatial Analysis, Political Data]
+image: voter-data-infographic.png
+format: 
+  html:
+    embed-resources: true
+    code-fold: true
+    code-summary: "Show code"
+editor_options: 
+  chunk_output_type: console
+execute:
+  warning: false
+  message: false
+---
+
+![Voter Registration Data Infographic](voter-data-infographic.png)
+
+## Why voter data?
+
+Since childhood, I've been interested in politics-- a fault I attribute to my dad. We were your typical liberal Prius-driving NPR listeners and CNN-blaring-in-the-background household. Upon moving to Santa Barbara in 2017 for my undergraduate degree, I've volunteered or worked in every election, traveling up and down the county to knock on doors for local candidates with pro-environment and pro-housing values.
+
+![Some campaigns over the years](my-pol-photos.png)
+
+Most visualizations of voter data happen at the national or state level, rather than within counties. Furthermore, election data from the 2024 general election has not been fully certified yet for most counties in California. I aim to provide a quick overview of the political composition of our county using voter registration and census data for people interested in local politics. A few questions I'd like to answer include:
+
+- How are Democratic and Republican voters spatially distributed throughout the county?
+- What is the political composition of the county?
+- Is there a partisan difference between voter ages?
+- How do voter registrations change over time? Do they increase in frequency closer to elections?
+
+## About the data
+
+The Santa Barbara County voter registration data used for this project was requested from SB County Elections, and is dated for May 9, 2025. It contains voter registration information (voter name, address, contact information, voting precinct, and political party affiliation) for all voters in the county.
+
+For census data, I use the `tidycensus` and `tigris` packages, with 2020 and 2023 geometries and population surveys, and `tidygeocoder` for addresses. 
+
+
+## Visualizations
+
+1. **How are voters distributed across the county?** I wanted to plot the difference in percentage of Democrats compared to Republicans across the county. I chose a chloropleth map to visualize this, because it is a good way to display spatial relationships. In Santa Barbara, urban centers in South County tend to lean heavily Democratic, while more rural areas are Republican. One challenge with displaying partisanship on a chloropleth map, however, is the visual overrepresentation of sparsely populated but large geographic areas. It appears as though a large portion of the county is red, when in reality very few people live in those areas, and the county as a whole leans solidly Democratic. Census blocks tend to be smaller than tracts, and areas with no population were excluded, therefore lessening the visual effect of area.
+
+2. **What is the partisan breakdown of the county** I've included a  waffle plot displaying the proportion of voters by party to visualize the percentage of voters belonging to each political party. 
+
+3. **How old are Democrats vs. Republicans?** For this visualization, I chose stacked bar charts to visualize the age breakdowns within each party and across the county. On average, Democrats are slightly younger than Republicans.
+
+4. **When do people register to vote?** Voters generally register to vote closer to elections, and we can see that there is a noticeable spike in the line graph of number of registrations each general election year (labeled on the x-axis). When we look at the weekly and daily registration trends leading up to the 2024 general election, we see a spike in registrations around the registration deadline and on election day.
+
+
+## Code for Visualizations
+
+```{r}
+#| output: false
+# -------------- Setup --------------
+# Load packages
+library(tidyverse)
+library(janitor)
+library(here)
+library(tidycensus)
+library(ggmap)
+library(sf)
+library(tigris)
+library(showtext)
+library(sysfonts)
+library(tidygeocoder)
+library(tmap)
+library(tmaptools)
+library(waffle)
+library(patchwork)
+library(leaflet)
+
+# Set census API key
+census_api_key(Sys.getenv("CENSUS_API_KEY"))
+```
+
+```{r}
+#| output: false
+# -------------- Customize Theme --------------
+# Customize font and theme
+font_add_google("EB Garamond", "EBGaramond")
+showtext_auto()
+theme_set(theme_bw())
+
+# Custom olors
+party_colors <- c(
+    "DEM" = "#126ca8",
+    "REP" = "#c83236",
+    "NPP" = "#c9b1d4",
+    "Other" = "gray80"
+)
+
+# Create custom function
+theme_voter_viz <- function(base_size = 20, base_family = "EBGaramond") {
+    theme_classic() %+replace%
+        theme(
+            panel.grid.major.y = element_blank(),
+            text = element_text(size = base_size, family = base_family),
+            axis.text = element_text(family = base_family),
+            plot.title = element_text(face = "bold", family = base_family),
+            plot.subtitle = element_text(family = base_family),
+            plot.caption = element_text(family = base_family),
+            legend.text = element_text(family = base_family)
+        )
+}
+```
+
+```{r}
+#| output: false
+# -------------- Load data --------------
+full_file <- read_delim(
+    here::here("posts/2025-03-17-voter-data-viz/data/Countywide_Voter Registration 030325.TXT"),
+    delim = "\t"
+) %>%
+    clean_names()
+```
+
+### Visualization 1: Spatial Analysis of Voter Distribution
+
+```{r}
+#| output: false
+# -------------- Geocoding & Retrieval of Census Data --------------
+# Prepare addresses for geocoding
+# address_full <- full_file %>%
+#     mutate(street_address_test = paste(address_number, street_name, sep = " "))
+#
+# # Geocoding function
+# geocode_addresses <- function() {
+#     census_list <- list()
+#     for (j in 1:25) {
+#         start_index <- ((j - 1) * 10000) + 1
+#         end_index <- j * 10000
+#
+#         census_list[[j]] <- address_full[start_index:end_index, ] %>%
+#             tidygeocoder::geocode(
+#                 street = street_address_test,
+#                 city = city,
+#                 state = state,
+#                 method = "census"
+#             )
+#     }
+#
+#     final_census_df <- bind_rows(census_list) %>%
+#         filter(party_code %in% c("DEM", "REP", "NPP")) %>%
+#         drop_na(lat)
+#
+#     # Save for future use
+#     saveRDS(final_census_df, "geocoded_addresses.rds")
+#
+#     return(final_census_df)
+# }
+#
+# final_census_df <- geocode_addresses()
+
+final_census_df <- readRDS("geocoded_addresses.rds")
+
+# File paths for saved data
+sb_pop_path <- here::here("posts/2025-03-17-voter-data-viz/data/sb_pop_2023.rds")
+sb_blocks_path <- here::here("posts/2025-03-17-voter-data-viz/data/sb_blocks_2020.rds")
+
+# Check if files exist, otherwise create and save them
+if (!file.exists(sb_pop_path)) {
+    # Get Santa Barbara census tract population data
+    sb_pop_2023 <- get_acs(
+        geography = "tract",
+        variables = "B01003_001", # Total population variable
+        state = "CA",
+        county = "Santa Barbara",
+        year = 2023,
+        geometry = TRUE
+    ) %>%
+        st_transform(crs = 4326) %>%
+        filter(GEOID != 06083990000) # Channel Islands tract
+
+    # Save to RDS file
+    saveRDS(sb_pop_2023, sb_pop_path)
+} else {
+    # Load from saved file
+    sb_pop_2023 <- readRDS(sb_pop_path)
+}
+
+if (!file.exists(sb_blocks_path)) {
+    # Get census block geography for Santa Barbara County
+    sb_blocks_2020 <- get_decennial(
+        geography = "block",
+        variables = "P1_001N", # Total population variable
+        state = "CA",
+        county = "Santa Barbara",
+        year = 2020,
+        geometry = TRUE
+    ) %>%
+        st_transform(crs = 4326) %>%
+        # filter out ocean tracts
+        filter(!grepl("^06083990000", GEOID))
+
+    # Save to RDS file
+    saveRDS(sb_blocks_2020, sb_blocks_path)
+} else {
+    # Load from saved file
+    sb_blocks_2020 <- readRDS(sb_blocks_path)
+}
+```
+
+```{r}
+#| fig.alt: "A choropleth map of Santa Barbara County showing Democratic vs Republican voter distribution by census tract. Urban areas appear blue (Democratic-leaning), while rural areas appear red (Republican-leaning). The map uses a diverging color scale from red to blue, with white representing balanced areas."
+
+# Tract-level map code here
+# -------------- Spatial Visualization: Census Tracts --------------
+# Convert geocoded addresses to sf object
+final_census_sf <- st_as_sf(
+    final_census_df,
+    coords = c("long", "lat"),
+    crs = 4326
+)
+
+# Join voters to tracts and calculate party percentages
+party_by_tract <- st_join(final_census_sf, sb_pop_2023) %>%
+    st_drop_geometry() %>%
+    count(GEOID, party_code) %>%
+    group_by(GEOID) %>%
+    mutate(tract_total = sum(n), percentage = n / tract_total * 100) %>%
+    ungroup()
+
+# Two-party comparison calculation
+two_party_comparison <- party_by_tract %>%
+    filter(party_code %in% c("DEM", "REP")) %>%
+    group_by(GEOID) %>%
+    mutate(two_party_total = sum(n)) %>%
+    mutate(two_party_pct = n / two_party_total * 100) %>%
+    select(GEOID, party_code, two_party_pct) %>%
+    pivot_wider(names_from = party_code, values_from = two_party_pct) %>%
+    mutate(diff = DEM - REP)
+
+# Join and create map
+tract_diff_map <- sb_pop_2023 %>%
+    select(GEOID, geometry) %>%
+    left_join(two_party_comparison, by = "GEOID") %>%
+    filter(!is.na(diff))
+
+# Create custom breaks and labels for the scale
+breaks <- seq(-100, 100, by = 20)
+labels <- sapply(breaks, function(x) {
+  if(x > 0) paste0("+", x)
+  else x
+})
+
+# Create the divergent map
+ggplot() +
+    geom_sf(data = tract_diff_map, aes(fill = diff)) +
+    scale_fill_gradient2(
+        low = party_colors["REP"],
+        mid = "#FFFFFF",
+        high = party_colors["DEM"],
+        midpoint = 0,
+        name = "Dem-Rep Difference (%)",
+        breaks = breaks,
+        labels = labels,
+        guide = guide_colorbar(
+          direction = "horizontal",
+          barwidth = 15,
+          barheight = 0.5,
+          title.position = "top",
+          title.hjust = 0.5
+        )
+    ) +
+    labs(
+        title = "Democratic vs. Republican Voter Distribution by Census Tract\n",
+        subtitle = "Percentage difference between parties (excluding other affiliations)"
+    ) +
+    theme_void() +
+    theme_voter_viz() +
+    theme(
+      legend.position = "bottom",
+      legend.title = element_text(size = 10),
+      legend.text = element_text(size = 8),
+      legend.margin = margin(t = 10, b = 10),
+      axis.title = element_blank(),
+      axis.text = element_blank(),
+      axis.ticks = element_blank(),
+      axis.line = element_blank()
+    )
+
+ggsave(
+  "tract_diff_map.svg", 
+  path = here::here("posts/2025-03-17-voter-data-viz/media"),
+  width = 16, 
+  height = 13
+)
+
+# Get bounding box
+tract_map_bbox <- st_bbox(tract_diff_map)
+```
+
+```{r}
+#| fig.alt: "A detailed choropleth map showing Democratic vs Republican voter distribution at the census block level in Santa Barbara County. This higher-resolution map reveals more nuanced patterns than the tract-level map."
+# Block-level map code here
+# -------------- Spatial Visualization: Block Groups --------------
+# Join voters to blocks and calculate party percentages
+party_by_block <- st_join(final_census_sf, sb_blocks_2020) %>%
+    st_drop_geometry() %>%
+    count(GEOID, party_code) %>%
+    group_by(GEOID) %>%
+    mutate(block_total = sum(n), percentage = n / block_total * 100) %>%
+    ungroup()
+
+# Two-party comparison calculation
+two_party_comparison <- party_by_block %>%
+    filter(party_code %in% c("DEM", "REP")) %>%
+    group_by(GEOID) %>%
+    mutate(
+        two_party_total = sum(n),
+        two_party_pct = n / two_party_total * 100
+    ) %>%
+    select(GEOID, party_code, two_party_pct) %>%
+    pivot_wider(names_from = party_code, values_from = two_party_pct) %>%
+    mutate(diff = DEM - REP)
+
+# Join and create map
+block_diff_map <- sb_blocks_2020 %>%
+    select(GEOID, geometry) %>%
+    left_join(two_party_comparison, by = "GEOID")
+
+# Create custom breaks and labels for the scale
+breaks <- seq(-100, 100, by = 20)
+labels <- sapply(breaks, function(x) {
+  if(x > 0) paste0("+", x)
+  else x
+})
+
+# Create divergent plot
+ggplot() +
+    geom_sf(data = block_diff_map, aes(fill = diff), color = NA, size = 0.5) +
+    geom_sf(data = filter(block_diff_map, is.na(diff)), fill = "gray80", color = "gray30") +
+    scale_fill_gradient2(
+        low = party_colors["REP"],
+        mid = "#FFFFFF",
+        high = party_colors["DEM"],
+        midpoint = 0,
+        name = "Dem-Rep Difference (%)",
+        breaks = breaks,
+        labels = labels,
+        guide = guide_colorbar(
+          direction = "horizontal",
+          barwidth = 15,
+          barheight = 0.5,
+          title.position = "top",
+          title.hjust = 0.5
+        ),
+        na.value = "gray80") +
+    coord_sf(
+        xlim = c(tract_map_bbox["xmin"], tract_map_bbox["xmax"]),
+        ylim = c(tract_map_bbox["ymin"], tract_map_bbox["ymax"])
+    ) +
+    labs(
+        title = "Democratic vs. Republican Voter Distribution by Census Block\n",
+        subtitle = "Percentage difference between parties (excluding other affiliations)"
+    ) +
+    theme_void() +
+    theme_voter_viz() +
+    theme(
+        legend.position = "bottom",
+        legend.title = element_text(size = 10),
+        legend.text = element_text(size = 8),
+        legend.margin = margin(t = 10, b = 10),
+        axis.text = element_blank(),
+        axis.title = element_blank(),
+        axis.ticks = element_blank(),
+        axis.line = element_blank()
+    )
+
+ggsave(
+  "block_diff_map.svg", 
+  path = here::here("posts/2025-03-17-voter-data-viz/media"),
+  width = 16, 
+  height = 13
+)
+```
+
+```{r}
+# Create a bounding box for a zoomed-in look at south county
+south_county_bbox <- tigris::places(state = "CA", cb = TRUE) %>%
+    filter(
+        NAME %in%
+            c(
+                "Santa Barbara",
+                "Goleta",
+                "Carpinteria",
+                "Isla Vista",
+                "Summerland",
+                "Montecito",
+                "Eastern Goleta Valley",
+                "Mission Canyon",
+                "University of California-Santa Barbara",
+                "Toro Canyon"
+            )
+    ) %>% 
+  st_union() %>%
+  st_buffer(dist = 0.02)
+
+ggplot() +
+    geom_sf(data = block_diff_map, aes(fill = diff), color = NA, size = 0.5) +
+    geom_sf(data = filter(block_diff_map, is.na(diff)), fill = "gray80", color = "gray30") +
+    scale_fill_gradient2(
+        low = party_colors["REP"],
+        mid = "#FFFFFF",
+        high = party_colors["DEM"],
+        midpoint = 0,
+        name = "Dem-Rep Difference (%)",
+        breaks = breaks,
+        labels = labels,
+        guide = guide_colorbar(
+          direction = "horizontal",
+          barwidth = 15,
+          barheight = 0.5,
+          title.position = "top",
+          title.hjust = 0.5
+        ),
+        na.value = "gray80" 
+    ) +
+    coord_sf(xlim = st_bbox(south_county_bbox)[c(1,3)],
+             ylim = st_bbox(south_county_bbox)[c(2,4)]) +
+    theme_void() +
+    theme_voter_viz() +
+    theme(
+        legend.position = "bottom",
+        legend.title = element_text(size = 10),
+        legend.text = element_text(size = 8),
+        legend.margin = margin(t = 10, b = 10),
+        axis.text = element_blank(),
+        axis.title = element_blank(),
+        axis.ticks = element_blank(),
+        axis.line = element_blank()
+    )
+
+ggsave(
+  "zoom_block_diff_map.svg", 
+  path = here::here("posts/2025-03-17-voter-data-viz/media"),
+  width = 16, 
+  height = 10
+)
+```
+
+```{r}
+#| fig.alt: An interactive map of Democratic vs Republican voter distribution in Santa Barbara County by census block. Blue areas indicate Democratic advantage, red areas indicate Republican advantage, with the ability to over regions to see specific percentage differences."
+# -------------- Spatial Visualization: Interactive Census Block Groups --------------
+# Create a diverging color palette for leaflet map
+pal <- colorNumeric(
+    palette = colorRampPalette(c(
+        party_colors["REP"],
+        "#FFFFFF",
+        party_colors["DEM"]
+    ))(100),
+    domain = c(-100, 100), # Set fixed domain from -100 to +100
+    na.color = "transparent"
+)
+
+# Create leaflet map with OpenStreetMap tiles
+leaflet(block_diff_map) %>%
+    addTiles() %>%
+    addPolygons(
+        fillColor = ~ pal(diff),
+        weight = 1,
+        opacity = 1,
+        color = "white",
+        dashArray = "3",
+        fillOpacity = 0.7,
+        label = ~ paste0("Dem-Rep diff: ", round(diff, 1), "%")
+    ) %>%
+    addLegend(
+        pal = pal,
+        values = ~diff,
+        opacity = 0.7,
+        title = "Dem-Rep Difference (%)",
+        position = "bottomright"
+    )
+```
+
+Note that UCSB is missing from the data. This could be because the census designates some universities as "group quarters" and counts them differently compared to other residences. Furthermore, students are likely underrepresented in the 2020 census due to the COVID-19 pandemic and remote learning, as well as general confusion about current address vs. permanent address.
+
+### Visualization 2: Party Proportions
+
+```{r}
+#| fig.alt: "A waffle chart showing party distribution in Santa Barbara County. Democrats make up the largest portion, followed by Republicans, No Party Preference voters, American Independent, and other parties."
+# --------------- Visualization 2: Party Proportions Waffle Chart --------------
+# Create waffle chart of party distribution
+waffle_counts <- full_file %>%
+    mutate(
+        party_code = if_else(
+            party_code %in% c("DEM", "REP", "NPP", "AI"),
+            party_code,
+            "Other"
+        )
+    ) %>%
+    count(party_code) %>%
+    mutate(
+        percent = n / sum(n) * 100,
+        party_name = case_when(
+            party_code == "DEM" ~ "Democrat",
+            party_code == "REP" ~ "Republican",
+            party_code == "NPP" ~ "No Party Preference",
+            party_code == "AI" ~ "American Independent",
+            TRUE ~ "Other"
+        ),
+        party_label = paste0(party_name, " (", round(percent, 1), "%)"),
+        party_code = factor(
+            party_code,
+            levels = c("DEM", "REP", "NPP", "AI", "Other")
+        )
+    ) %>%
+    arrange(party_code)
+
+# Limit total squares for better display
+max_squares <- 200
+if (sum(waffle_counts$n) > max_squares) {
+    waffle_counts <- waffle_counts %>%
+        mutate(n = round(n * max_squares / sum(n)))
+}
+
+# Create named vector for legend labels
+party_labels <- setNames(
+    waffle_counts$party_label,
+    waffle_counts$party_code
+)
+
+# Update party colors to include AI
+party_colors_updated <- party_colors
+party_colors_updated["AI"] <- "gray40"
+
+# Create waffle chart
+ggplot(waffle_counts, aes(fill = party_code, values = n)) +
+    geom_waffle(color = "white", size = 1, n_rows = 10) +
+    scale_fill_manual(
+        values = party_colors_updated,
+        labels = party_labels
+    ) +
+    coord_fixed() +
+    theme_voter_viz() +
+    theme(
+        axis.text = element_blank(),
+        axis.title = element_blank(),
+        axis.ticks = element_blank(),
+        axis.line = element_blank(),
+        legend.spacing.x = unit(1.0, "cm"),   
+        legend.spacing.y = unit(1.0, "cm"), 
+    ) +
+    labs(
+        title = "Party Distribution in Santa Barbara County",
+        fill = "Party"
+    )
+
+ggsave(
+  "party_waffle_chart.svg",
+  path = here::here("posts/2025-03-17-voter-data-viz/media"),
+  width = 16,
+  height = 13
+)
+```
+
+### Visualization 3: Age Composition by Party
+
+```{r}
+#| fig.alt: "A stacked bar chart showing the age distribution of voters by party compared to overall county population. The chart shows that Republican voters tend to be older than Democratic voters, with a higher percentage in the 65+ age group. Democrats have more representation in younger age brackets (18-25, 26-35) compared to Republicans."
+# -------------- Visualization 3: Age Composition by Party --------------
+# Calculate age distribution by party
+voter_ages <- full_file %>%
+    mutate(
+        age_group = cut(
+            interval(dob, today()) %/% years(1),
+            breaks = c(18, 25, 35, 50, 65, Inf),
+            labels = c("18-25", "26-35", "36-50", "51-65", "65+"),
+            right = FALSE
+        ),
+        party_code = factor(party_code, levels = c("DEM", "REP"))
+    ) %>%
+    filter(!is.na(party_code)) %>%
+    count(party_code, age_group) %>%
+    group_by(party_code) %>%
+    mutate(pct = n / sum(n)) %>%
+    ungroup()
+
+# Fetch and process Santa Barbara County census age data
+sb_age_data <- get_acs(
+    geography = "county",
+    table = "B01001",
+    year = 2023,
+    cache_table = TRUE
+) %>%
+    filter(NAME == "Santa Barbara County, California") %>%
+    mutate(
+        age_group = case_when(
+            variable %in%
+                c("B01001_003", "B01001_004", "B01001_027", "B01001_028") ~
+                "18-25",
+            variable %in%
+                c("B01001_005", "B01001_006", "B01001_029", "B01001_030") ~
+                "26-35",
+            variable %in%
+                c(
+                    "B01001_007",
+                    "B01001_008",
+                    "B01001_009",
+                    "B01001_031",
+                    "B01001_032",
+                    "B01001_033"
+                ) ~
+                "36-50",
+            variable %in%
+                c(
+                    "B01001_010",
+                    "B01001_011",
+                    "B01001_012",
+                    "B01001_013",
+                    "B01001_034",
+                    "B01001_035",
+                    "B01001_036",
+                    "B01001_037"
+                ) ~
+                "51-65",
+            variable %in%
+                c(
+                    "B01001_014",
+                    "B01001_015",
+                    "B01001_016",
+                    "B01001_017",
+                    "B01001_018",
+                    "B01001_019",
+                    "B01001_038",
+                    "B01001_039",
+                    "B01001_040",
+                    "B01001_041",
+                    "B01001_042",
+                    "B01001_043"
+                ) ~
+                "65+",
+            TRUE ~ NA_character_
+        )
+    ) %>%
+    filter(!is.na(age_group)) %>%
+    group_by(age_group) %>%
+    summarize(n = sum(estimate)) %>%
+    mutate(
+        pct = n / sum(n),
+        party_code = "SB County"
+    ) %>%
+    mutate(
+        age_group = factor(
+            age_group,
+            levels = c("18-25", "26-35", "36-50", "51-65", "65+")
+        )
+    )
+
+# Combine data and create plot
+bind_rows(voter_ages, sb_age_data) %>%
+    mutate(
+        party_code = factor(party_code, levels = c("DEM", "REP", "SB County")),
+        label = paste0(age_group, " (", scales::percent(pct, accuracy = 1), ")")
+    ) %>%
+    ggplot(aes(x = party_code, y = pct, fill = age_group)) +
+    geom_col(width = 0.6) +
+    geom_text(
+        aes(label = label),
+        position = position_stack(vjust = 0.5),
+        color = "black",
+        fontface = "bold",
+        size = 5.5,
+        family = "EBGaramond"
+    ) +
+    scale_fill_brewer(palette = "Purples", direction = 1) +
+    scale_y_continuous(
+        labels = scales::percent,
+        breaks = seq(0, 1, 0.2)
+    ) +
+    labs(
+        title = "Age Distribution of Voters in Santa Barbara County by Party",
+        subtitle = "Comparing party affiliations with overall county population\n",
+        x = NULL,
+        y = "Proportion",
+        caption = "\nSources: Santa Barbara Voter File (2025), US Census ACS 2023"
+    ) +
+    theme_voter_viz() +
+    theme(
+        axis.text.y = element_blank(),
+        axis.ticks = element_blank(),
+        legend.position = "none",
+        text = element_text(family = "EBGaramond")
+    )
+
+ggsave(
+    "age_composition_plot.svg",
+    path = here::here("posts/2025-03-17-voter-data-viz/media"),
+    width = 16,
+    height = 13
+)
+```
+
+### Visualization 4: Registration Trends
+
+```{r}
+#| fig.alt: "A line graph showing voter registration trends in Santa Barbara County from 2000 to 2024. The graph displays clear spikes in registration numbers during presidential election years, with registrations typically doubling or tripling compared to non-election years."
+# -------------- Visualization 4: Yearly Registration Trends --------------
+# Analyze registrations over time
+yearly_registration <- full_file %>%
+    mutate(year = format(registration_date, "%Y")) %>%
+    filter(year >= "2000") %>%
+    filter(year <= "2024") %>%
+    count(year)
+
+# Create time series plot
+ggplot(yearly_registration, aes(x = year, y = n)) +
+    geom_line(group = 1, color = "purple4") +
+    geom_point(color = "purple4") +
+    labs(
+        title = "Voter Registrations in Santa Barbara County",
+        subtitle = "Number of new registrations from 2000 - 2024, showing spikes in new registrations during general election years",
+        x = "Year",
+        y = "Number of New Registrations"
+    ) +
+    scale_x_discrete(
+        breaks = seq(
+            from = min(yearly_registration$year),
+            to = max(yearly_registration$year),
+            by = 4
+        )
+    ) +
+    theme(
+        panel.grid.major.y = element_blank(),
+        text = element_text(size = 24, family = "EBGaramond"),
+        axis.text = element_text(family = "EBGaramond"),
+        plot.title = element_text(face = "bold", family = "EBGaramond"),
+        plot.subtitle = element_text(family = "EBGaramond"),
+        plot.caption = element_text(family = "EBGaramond"),
+        legend.text = element_text(family = "EBGaramond")
+    )
+
+ggsave(
+    "yearly_registration_plot.svg",
+    path = here::here("posts/2025-03-17-voter-data-viz/media"),
+    width = 16,
+    height = 13
+)
+```
+
+It seems obvious that more people register to vote in election years. But how long do they wait to register? Let's look at the 2024 March 5th primary election and November 5th presidential election to take a closer look at when people register to vote.
+
+```{r}
+#| fig.alt: "A stacked area chart showing weekly voter registrations in Santa Barbara County throughout 2024, broken down by party (Democratic, Republican, and No Party Preference). The chart shows two significant registration spikes corresponding to the March primary and November general elections, with vertical dashed red lines marking these dates."
+# Weekly trends code here
+# -------------- Visualization 4: Weekly Registration Trends --------------
+# Analyze 2024 registrations by week and party
+weekly_registrations <- full_file %>%
+    mutate(
+        reg_year = lubridate::year(registration_date),
+        reg_month = lubridate::month(registration_date),
+        reg_week = lubridate::week(registration_date),
+        reg_day = lubridate::day(registration_date),
+        week_start_date = lubridate::floor_date(registration_date, "week")
+    ) %>%
+    filter(reg_year >= 2024, reg_year <= 2025) %>%
+    count(reg_week, week_start_date, party_code) %>%
+    group_by(reg_week, party_code) %>%
+    slice(1) %>%
+    ungroup() %>%
+    filter(party_code %in% c("DEM", "REP", "NPP"))
+
+# Create election day reference dates
+election_dates <- tibble(
+    date = as.Date(c("2024-03-05", "2024-11-05")),
+    label = c("Primary", "General")
+)
+
+# Create stacked area chart
+ggplot(
+    weekly_registrations,
+    aes(x = week_start_date, y = n, fill = party_code)
+) +
+    geom_area(alpha = 0.8) +
+    geom_vline(
+        data = election_dates,
+        aes(xintercept = date),
+        linetype = "dashed",
+        color = "red"
+    ) +
+    labs(
+        title = "Voter Registrations in Santa Barbara County (2024)",
+        subtitle = "Composition of new registrations by week and party",
+        y = "Number of New Registrations",
+        fill = "Party"
+    ) +
+    scale_x_date(
+        date_breaks = "1 month",
+        date_labels = "%b" # Format: "Jan 01"
+    ) +
+    scale_fill_manual(values = party_colors) +
+    theme_voter_viz() +
+    theme(
+        axis.title.x = element_blank(),
+        legend.position = "bottom"
+    )
+
+ggsave(
+    "weekly_registration_plot.svg",
+    path = here::here("posts/2025-03-17-voter-data-viz/media"),
+    width = 16,
+    height = 13
+)
+```
+
+```{r}
+#| fig.alt: "A stacked area chart showing daily voter registrations in Santa Barbara County from October 5 to November 5, 2024. The chart shows a spike in registrations near the October 21 registration deadline (marked with a red dashed line), and a second, larger spike on Election Day (November 5)."
+# Daily trends code here
+# -------------- Visualization 4: Daily Registration Trends Before Election --------------
+# Analyze daily registrations for Oct 5 - Nov 5 period
+daily_registrations <- full_file %>%
+    filter(
+        registration_date >= as.Date("2024-10-05"),
+        registration_date <= as.Date("2024-11-05"),
+        party_code %in% c("DEM", "REP", "NPP")
+    ) %>%
+    count(registration_date, party_code)
+
+# Create reference dates
+reference_dates <- tibble(
+    date = c(as.Date("2024-11-05"), as.Date("2024-10-21")),
+    label = c("Election Day", "Registration Deadline")
+)
+
+# Create a stacked area chart with daily data
+ggplot(
+    daily_registrations,
+    aes(x = registration_date, y = n, fill = party_code)
+) +
+    geom_area(alpha = 0.8) +
+    # Add vertical lines for both reference dates
+    geom_vline(
+        data = reference_dates,
+        aes(xintercept = date),
+        linetype = "dashed",
+        color = "red",
+    ) +
+    labs(
+        title = "Voter Registrations in Santa Barbara County (Oct 5 - Nov 5, 2024)",
+        subtitle = "Daily registrations in the month leading up to the election",
+        y = "Number of New Registrations",
+        fill = "Party"
+    ) +
+    scale_x_date(
+        breaks = seq.Date(
+            from = as.Date("2024-10-05"),
+            to = as.Date("2024-11-05"),
+            by = "1 day"
+        ),
+        labels = NULL,
+        date_minor_breaks = "1 week",
+        limits = c(as.Date("2024-10-05"), as.Date("2024-11-05"))
+    ) +
+    scale_y_continuous(
+        breaks = seq(0, 6200, by = 1000)
+    ) +
+    scale_fill_manual(values = party_colors) +
+    theme_voter_viz() +
+    theme(
+        axis.title.x = element_blank(),
+        legend.position = "bottom"
+    )
+
+ggsave(
+    "daily_registration_plot.svg",
+    path = here::here("posts/2025-03-17-voter-data-viz/media/"),
+    width = 16,
+    height = 13
+)
+```
+
+The most amount of registrations occur on Election Day. California offers same-day voter registration for voters who need to vote provisionally (did not register in advance, moved addresses, voting at different polling location, etc.) This is not true for all states, however, especially those actively restricting voting rights. 
+
+## Discussion - design elements & aesthetic choices
+
+Select tab to see discussion on the topic.
+
+::: {.panel-tabset}
+
+### Graphic Form + General Design
+
+Creating my spatial visualization took the most amount of time, and I chose to include an interactive block group level map, because partisan differences can be obscured by geography and population. I wanted my quick-glance infographic to present the data in a formal, news-oriented format, as if it were something you would see on the New York Times or 538. 
+
+### Text, Themes, Colors, & Typography
+
+My aesthetic choices and theming were heavily influenced by New York Times and other legacy news media data visualizations. I chose red and blue since they're the traditional colors that represent political parties, in addition to purple and grey as neutral colors. The text for my individual plots provides an overview for each plot as a standalone, explaining relationships and key takeaways.
+
+### Primary Message + Contribution
+
+I aim to provide sub-county level visualizations of partisanship for SB County. While the south portion of the county is heavily Democratic, rural areas and north county leans more Republican. Registered Republicans are slightly older than Democrats, but also wait until the last minute to register to vote.
+
+These visualizations provide a quick way to glean context from local outcomes of elections. They can be used as tool to compare vote shares for candiates or issues against, or to look at partisan counts for redistricting efforts.
+
+### Accessibility
+
+While my spatial visualization is not colorblind friendly, I have included alt-text to improve accessibility for those using screen readers. In the future, I would like to create a colorblind-friendly version of this infographic.
+
+### DEI
+
+Because my voter data only includes age variables, I chose to focus on partisan differences between Democrats and Republicans in this analysis rather than incorporating other demographic variables. However, adding census-tract level analysis using additional variables like income, race/ethnicity, or housing burden from the American Community Survey could be interesting. 
+
+Furthermore, a partisan analysis lends itself to the concepts of diversity, equity, and inclusion. The modern Republican party under Trump has attempted to kill DEI initiatives and mentions of it from government. It's worth visualizing voter sentiments locally, because while Trump won the 2024 election, SB county remains deeply blue, especially south county.
+
+:::
