@@ -44,7 +44,7 @@ For census data, I use the `tidycensus` and `tigris` packages, with 2020 and 202
 
 1. **How are voters distributed across the county?** I wanted to plot the difference in percentage of Democrats compared to Republicans across the county. I chose a chloropleth map to visualize this, because it is a good way to display spatial relationships. In Santa Barbara, urban centers in South County tend to lean heavily Democratic, while more rural areas are Republican. One challenge with displaying partisanship on a chloropleth map, however, is the visual overrepresentation of sparsely populated but large geographic areas. It appears as though a large portion of the county is red, when in reality very few people live in those areas, and the county as a whole leans solidly Democratic. Census blocks tend to be smaller than tracts, and areas with no population were excluded, therefore lessening the visual effect of area.
 
-2. **What is the partisan breakdown of the county** I've included a  waffle plot displaying the proportion of voters by party to visualize the percentage of voters belonging to each political party. 
+2. **What is the partisan breakdown of the county?** I've included a  waffle plot displaying the proportion of voters by party to visualize the percentage of voters belonging to each political party. 
 
 3. **How old are Democrats vs. Republicans?** For this visualization, I chose stacked bar charts to visualize the age breakdowns within each party and across the county. On average, Democrats are slightly younger than Republicans.
 
@@ -243,8 +243,11 @@ tract_diff_map <- sb_pop_2023 %>%
 # Create custom breaks and labels for the scale
 breaks <- seq(-100, 100, by = 20)
 labels <- sapply(breaks, function(x) {
-  if(x > 0) paste0("+", x)
-  else x
+    if (x > 0) {
+        paste0("+", x)
+    } else {
+        x
+    }
 })
 
 # Create the divergent map
@@ -259,11 +262,11 @@ ggplot() +
         breaks = breaks,
         labels = labels,
         guide = guide_colorbar(
-          direction = "horizontal",
-          barwidth = 15,
-          barheight = 0.5,
-          title.position = "top",
-          title.hjust = 0.5
+            direction = "horizontal",
+            barwidth = 15,
+            barheight = 0.5,
+            title.position = "top",
+            title.hjust = 0.5
         )
     ) +
     labs(
@@ -273,21 +276,21 @@ ggplot() +
     theme_void() +
     theme_voter_viz() +
     theme(
-      legend.position = "bottom",
-      legend.title = element_text(size = 10),
-      legend.text = element_text(size = 8),
-      legend.margin = margin(t = 10, b = 10),
-      axis.title = element_blank(),
-      axis.text = element_blank(),
-      axis.ticks = element_blank(),
-      axis.line = element_blank()
+        legend.position = "bottom",
+        legend.title = element_text(size = 10),
+        legend.text = element_text(size = 8),
+        legend.margin = margin(t = 10, b = 10),
+        axis.title = element_blank(),
+        axis.text = element_blank(),
+        axis.ticks = element_blank(),
+        axis.line = element_blank()
     )
 
 ggsave(
-  "tract_diff_map.svg", 
-  path = here::here("posts/2025-03-17-voter-data-viz/media"),
-  width = 16, 
-  height = 13
+    "tract_diff_map.svg",
+    path = here::here("posts/2025-03-17-voter-data-viz/media"),
+    width = 16,
+    height = 13
 )
 
 # Get bounding box
@@ -326,8 +329,11 @@ block_diff_map <- sb_blocks_2020 %>%
 # Create custom breaks and labels for the scale
 breaks <- seq(-100, 100, by = 20)
 labels <- sapply(breaks, function(x) {
-  if(x > 0) paste0("+", x)
-  else x
+    if (x > 0) {
+        paste0("+", x)
+    } else {
+        x
+    }
 })
 
 # Create divergent plot
@@ -343,13 +349,14 @@ ggplot() +
         breaks = breaks,
         labels = labels,
         guide = guide_colorbar(
-          direction = "horizontal",
-          barwidth = 15,
-          barheight = 0.5,
-          title.position = "top",
-          title.hjust = 0.5
+            direction = "horizontal",
+            barwidth = 15,
+            barheight = 0.5,
+            title.position = "top",
+            title.hjust = 0.5
         ),
-        na.value = "gray80") +
+        na.value = "gray80"
+    ) +
     coord_sf(
         xlim = c(tract_map_bbox["xmin"], tract_map_bbox["xmax"]),
         ylim = c(tract_map_bbox["ymin"], tract_map_bbox["ymax"])
@@ -372,14 +379,15 @@ ggplot() +
     )
 
 ggsave(
-  "block_diff_map.svg", 
-  path = here::here("posts/2025-03-17-voter-data-viz/media"),
-  width = 16, 
-  height = 13
+    "block_diff_map.svg",
+    path = here::here("posts/2025-03-17-voter-data-viz/media"),
+    width = 16,
+    height = 13
 )
 ```
 
 ```{r}
+#| output: false
 # Create a bounding box for a zoomed-in look at south county
 south_county_bbox <- tigris::places(state = "CA", cb = TRUE) %>%
     filter(
@@ -396,10 +404,12 @@ south_county_bbox <- tigris::places(state = "CA", cb = TRUE) %>%
                 "University of California-Santa Barbara",
                 "Toro Canyon"
             )
-    ) %>% 
-  st_union() %>%
-  st_buffer(dist = 0.02)
+    ) %>%
+    st_union() %>%
+    st_buffer(dist = 0.02)
+```
 
+```{r}
 ggplot() +
     geom_sf(data = block_diff_map, aes(fill = diff), color = NA, size = 0.5) +
     geom_sf(data = filter(block_diff_map, is.na(diff)), fill = "gray80", color = "gray30") +
@@ -412,16 +422,18 @@ ggplot() +
         breaks = breaks,
         labels = labels,
         guide = guide_colorbar(
-          direction = "horizontal",
-          barwidth = 15,
-          barheight = 0.5,
-          title.position = "top",
-          title.hjust = 0.5
+            direction = "horizontal",
+            barwidth = 15,
+            barheight = 0.5,
+            title.position = "top",
+            title.hjust = 0.5
         ),
-        na.value = "gray80" 
+        na.value = "gray80"
     ) +
-    coord_sf(xlim = st_bbox(south_county_bbox)[c(1,3)],
-             ylim = st_bbox(south_county_bbox)[c(2,4)]) +
+    coord_sf(
+        xlim = st_bbox(south_county_bbox)[c(1, 3)],
+        ylim = st_bbox(south_county_bbox)[c(2, 4)]
+    ) +
     theme_void() +
     theme_voter_viz() +
     theme(
@@ -436,15 +448,15 @@ ggplot() +
     )
 
 ggsave(
-  "zoom_block_diff_map.svg", 
-  path = here::here("posts/2025-03-17-voter-data-viz/media"),
-  width = 16, 
-  height = 10
+    "zoom_block_diff_map.svg",
+    path = here::here("posts/2025-03-17-voter-data-viz/media"),
+    width = 16,
+    height = 10
 )
 ```
 
 ```{r}
-#| fig.alt: An interactive map of Democratic vs Republican voter distribution in Santa Barbara County by census block. Blue areas indicate Democratic advantage, red areas indicate Republican advantage, with the ability to over regions to see specific percentage differences."
+#| fig.alt: "An interactive map of Democratic vs Republican voter distribution in Santa Barbara County by census block. Blue areas indicate Democratic advantage, red areas indicate Republican advantage, with the ability to over regions to see specific percentage differences."
 # -------------- Spatial Visualization: Interactive Census Block Groups --------------
 # Create a diverging color palette for leaflet map
 pal <- colorNumeric(
@@ -467,7 +479,7 @@ leaflet(block_diff_map) %>%
         color = "white",
         dashArray = "3",
         fillOpacity = 0.7,
-        label = ~ paste0("Dem-Rep diff: ", round(diff, 1), "%")
+        label = ~ paste0("Dem-Rep Difference: ", round(diff, 1), "%")
     ) %>%
     addLegend(
         pal = pal,
@@ -487,37 +499,30 @@ Note that UCSB is missing from the data. This could be because the census design
 # --------------- Visualization 2: Party Proportions Waffle Chart --------------
 # Create waffle chart of party distribution
 waffle_counts <- full_file %>%
-    mutate(
-        party_code = if_else(
-            party_code %in% c("DEM", "REP", "NPP", "AI"),
-            party_code,
-            "Other"
-        )
-    ) %>%
-    count(party_code) %>%
-    mutate(
-        percent = n / sum(n) * 100,
-        party_name = case_when(
-            party_code == "DEM" ~ "Democrat",
-            party_code == "REP" ~ "Republican",
-            party_code == "NPP" ~ "No Party Preference",
-            party_code == "AI" ~ "American Independent",
-            TRUE ~ "Other"
-        ),
-        party_label = paste0(party_name, " (", round(percent, 1), "%)"),
-        party_code = factor(
-            party_code,
-            levels = c("DEM", "REP", "NPP", "AI", "Other")
-        )
-    ) %>%
-    arrange(party_code)
-
-# Limit total squares for better display
-max_squares <- 200
-if (sum(waffle_counts$n) > max_squares) {
-    waffle_counts <- waffle_counts %>%
-        mutate(n = round(n * max_squares / sum(n)))
-}
+  mutate(
+    party_code = if_else(
+      party_code %in% c("DEM", "REP", "NPP", "AI"),
+      party_code,
+      "Other"
+    )
+  ) %>%
+  count(party_code) %>%
+  mutate(
+    percent = n / sum(n) * 100,
+    party_name = case_when(
+      party_code == "DEM" ~ "Democrat",
+      party_code == "REP" ~ "Republican",
+      party_code == "NPP" ~ "No Party Preference",
+      party_code == "AI" ~ "American Independent",
+      TRUE ~ "Other"
+    ),
+    party_label = paste0(party_name, " (", round(percent, 1), "%)"),
+    party_code = factor(
+      party_code,
+      levels = c("DEM", "REP", "NPP", "AI", "Other")
+    )
+  ) %>%
+  arrange(party_code)
 
 # Create named vector for legend labels
 party_labels <- setNames(
@@ -531,25 +536,30 @@ party_colors_updated["AI"] <- "gray40"
 
 # Create waffle chart
 ggplot(waffle_counts, aes(fill = party_code, values = n)) +
-    geom_waffle(color = "white", size = 1, n_rows = 10) +
-    scale_fill_manual(
-        values = party_colors_updated,
-        labels = party_labels
-    ) +
-    coord_fixed() +
-    theme_voter_viz() +
-    theme(
-        axis.text = element_blank(),
-        axis.title = element_blank(),
-        axis.ticks = element_blank(),
-        axis.line = element_blank(),
-        legend.spacing.x = unit(1.0, "cm"),   
-        legend.spacing.y = unit(1.0, "cm"), 
-    ) +
-    labs(
-        title = "Party Distribution in Santa Barbara County",
-        fill = "Party"
-    )
+  geom_waffle(
+    color = "white", 
+    size = 2.5, 
+    n_rows = 10,
+    make_proportional = TRUE
+  ) +
+  scale_fill_manual(
+    values = party_colors_updated,
+    labels = party_labels
+  ) +
+  coord_fixed() +
+  theme_voter_viz() +
+  theme(
+    axis.text = element_blank(),
+    axis.title = element_blank(),
+    axis.ticks = element_blank(),
+    axis.line = element_blank(),
+    legend.spacing.x = unit(1.0, "cm"),
+    legend.spacing.y = unit(1.0, "cm"),
+  ) +
+  labs(
+    title = "Party Distribution in Santa Barbara County",
+    fill = "Party"
+  )
 
 ggsave(
   "party_waffle_chart.svg",
@@ -558,6 +568,7 @@ ggsave(
   height = 13
 )
 ```
+
 
 ### Visualization 3: Age Composition by Party
 
@@ -820,6 +831,13 @@ daily_registrations <- full_file %>%
         party_code %in% c("DEM", "REP", "NPP")
     ) %>%
     count(registration_date, party_code)
+
+# Count total number of registrations on key dates
+daily_registrations_lookup <- full_file %>%
+  filter(
+    registration_date %in% c("2024-03-05", "2024-10-21", "2024-11-05")
+  ) %>%
+  count(registration_date)
 
 # Create reference dates
 reference_dates <- tibble(
