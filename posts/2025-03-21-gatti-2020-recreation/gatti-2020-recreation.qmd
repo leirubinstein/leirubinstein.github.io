@@ -20,13 +20,13 @@ execute:
 
 ## Introduction
 
-[**Gatti - 2020 - Can Irrigation Infrastructure Mitigate the Effect of Rainfall Shocks on Conflict**](https://onlinelibrary.wiley.com/doi/full/10.1002/ajae.12092) finds an agricultural link between rainfall and conflict in rural areas and for conflicts about natural resources, popular justice, and law enforcement. 
+[**Can Irrigation Infrastructure Mitigate the Effect of Rainfall Shocks on Conflict?**](https://onlinelibrary.wiley.com/doi/full/10.1002/ajae.12092) uses data from Indonesia to provide evidence of an agricultural link between rainfall and conflict. Low rainfall during the agricultural season decreases production and increases civil conflict, specifically for conflicts about natural resources and popular justice. The researchers then show that the rainfall-conflict link is attenuated by the presence of irrigation infrastructure in a district. 
 
-The researchers measured outcome in total number of conflict incidents or the hyperbolic sine transformation of rice production in a given district-year. The treatment variable was the interaction between rainfall and district-level irrigation infrastructure measured in 1997, before the study period. 
+The authors measured the total number of conflict incidents and the hyperbolic sine transformation of rice production in a given district-year as the outcome. The treatment variable was the interaction between rainfall and district-level irrigation infrastructure measured in 1997, before the study period. 
 
-They used a fixed-effect regression model to estimate the interaction between a district’s irrigation capacity and growing season rainfall in the current year. They used baseline irrigation capacity infrastructure in 1997 as an instrumental variable. The researchers chose this method because random assignment of infrastructure wasn’t feasible and using predetermined irrigation capacity helped ensure that the observed effects were driven by weather conditions rather than other factors. 
+They used a fixed-effects regression model to estimate the interaction between a district’s irrigation capacity and growing season rainfall in the current year, and used baseline irrigation capacity infrastructure in 1997 as an instrumental variable. The researchers chose this method because random assignment of infrastructure wasn’t feasible and using predetermined irrigation capacity helped ensure that the observed effects were driven by weather conditions rather than other factors. 
 
-## Blog Post
+## Recreation
 
 In this blog post we will be doing some exploration through the data `data.dta` associated with the paper.
 
@@ -437,3 +437,7 @@ combined_plot +
         guides = "collect"
     ) # 1 legend.
 ```
+
+## Citations
+
+Gatti, N., Baylis, K. and Crost, B. (2020), Can Irrigation Infrastructure Mitigate the Effect of Rainfall Shocks on Conflict? Evidence from Indonesia. Amer. J. Agr. Econ., 103: 211-231. https://doi.org/10.1002/ajae.12092
