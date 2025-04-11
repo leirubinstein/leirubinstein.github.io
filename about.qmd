@@ -1,16 +1,24 @@
 ---
 title: "About Me"
+toc: true
+format: html
+editor_options: 
+  chunk_output_type: console
 ---
 
-### Biography
+## Welcome
 
-I earned my Bachelor of Arts in Political Science and Environmental Studies from the University of California, Santa Barbara in 2021. Inspired by Santa Barbara’s legacy of environmental activism, I have dedicated myself to running local and federal campaigns with social justice and conservation-driven values for the past seven years. Following my undergraduate degree, I worked at an environmental law firm, specializing in litigation and regulatory disputes relating to remediation of Superfund sites. My professional experience includes roles in political organizing, legislation, and environmental law, where I honed skills in public communication, community engagement, and environmental policy analysis.
+Hi there! My name is Leilanie Rubinstein, and I'm a graduate student at the Bren School of Environmental Science & Management in Santa Barbara, California. This is my personal website and data science blog (along with a few photos I've taken).
 
-Currently pursuing a Master of Environmental Data Science at the Bren School, I aspire to work in environmental economics research or government. I aim to leverage remote sensing and machine learning techniques to develop solutions for resource management and climate change mitigation, promoting sustainable practices and enhancing climate resilience locally and globally.
+## Background
 
-In my free time, I enjoy biking, gaming, and exploring nature and the night sky through my camera lens.
+I'm from [Palm Springs, CA](https://visitpalmsprings.com/), a desert town in the Coachella Valley of Southern California. 
 
+![Windmills outside of Palm Springs](media/DSC_9137.jpg)
 
+Desert cities are a testament to humanity's hubris-- how and why would we *choose* to build a place where the summers are so hot that the asphalt begins to melt? Growing up in this environment primed me to care about the impacts of climate change from an early age. Extreme heat and drought, among other consequences, affect socioeconomically disadvantaged populations the most.
+
+My motivation for pursuing a career in environmental data science stems from wanting to understand how we can better serve our communities and ecosystems impacted by climate change. I strongly believe that data-driven solutions promote better public policy.
 
 <!-- ## What I do for work -->
 
