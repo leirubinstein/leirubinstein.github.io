@@ -85,7 +85,7 @@ font_add_google("EB Garamond", "EBGaramond")
 showtext_auto()
 theme_set(theme_bw())
 
-# Custom olors
+# Custom colors
 party_colors <- c(
     "DEM" = "#126ca8",
     "REP" = "#c83236",
@@ -155,7 +155,7 @@ full_file <- read_delim(
 #
 # final_census_df <- geocode_addresses()
 
-final_census_df <- readRDS("geocoded_addresses.rds")
+final_census_df <- readRDS(here::here("posts/2025-03-17-voter-data-viz/data/geocoded_addresses.rds"))
 
 # File paths for saved data
 sb_pop_path <- here::here("posts/2025-03-17-voter-data-viz/data/sb_pop_2023.rds")
