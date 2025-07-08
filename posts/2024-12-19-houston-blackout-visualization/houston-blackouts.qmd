@@ -51,10 +51,10 @@ librarian::shelf(
 ```{r}
 #| output: false
 # Import night lights data
-night_lights1 <- terra::rast(here::here("posts/2024-12-09-houston-blackout-visualization","data", "VNP46A1/VNP46A1.A2021038.h08v05.001.2021039064328.tif"))
-night_lights2 <- terra::rast(here::here("posts/2024-12-09-houston-blackout-visualization", "data", "VNP46A1/VNP46A1.A2021038.h08v06.001.2021039064329.tif"))
-night_lights3 <- terra::rast(here::here("posts/2024-12-09-houston-blackout-visualization", "data", "VNP46A1/VNP46A1.A2021047.h08v05.001.2021048091106.tif"))
-night_lights4 <- terra::rast(here::here("posts/2024-12-09-houston-blackout-visualization", "data", "VNP46A1/VNP46A1.A2021047.h08v06.001.2021048091105.tif"))
+night_lights1 <- terra::rast(here::here("posts/2024-12-19-houston-blackout-visualization","data", "VNP46A1/VNP46A1.A2021038.h08v05.001.2021039064328.tif"))
+night_lights2 <- terra::rast(here::here("posts/2024-12-19-houston-blackout-visualization", "data", "VNP46A1/VNP46A1.A2021038.h08v06.001.2021039064329.tif"))
+night_lights3 <- terra::rast(here::here("posts/2024-12-19-houston-blackout-visualization", "data", "VNP46A1/VNP46A1.A2021047.h08v05.001.2021048091106.tif"))
+night_lights4 <- terra::rast(here::here("posts/2024-12-19-houston-blackout-visualization", "data", "VNP46A1/VNP46A1.A2021047.h08v06.001.2021048091105.tif"))
 ```
 
 ```{r}
@@ -88,12 +88,12 @@ night_lights_change_poly <- as.polygons(night_lights_change) %>%
 ```{r}
 #| output: false
 # Import infrastructure data
-roads <- read_sf(here::here("posts/2024-12-09-houston-blackout-visualization",
+roads <- read_sf(here::here("posts/2024-12-19-houston-blackout-visualization",
                             "data", "gis_osm_roads_free_1.gpkg"), 
                  query = "SELECT * FROM gis_osm_roads_free_1 WHERE fclass='motorway'") %>%
   st_transform(crs = "EPSG:3083")
 
-houses <- read_sf(here::here("posts/2024-12-09-houston-blackout-visualization",
+houses <- read_sf(here::here("posts/2024-12-19-houston-blackout-visualization",
                              "data", "gis_osm_buildings_a_free_1.gpkg"),
                   query = "SELECT * FROM gis_osm_buildings_a_free_1 
                          WHERE (type IS NULL AND name IS NULL)
@@ -182,21 +182,21 @@ p2 <- ggplot() +
        plot.margin = margin(0, 0, 0, 0))
 
 # Save temporary plots
-ggsave(here::here("posts/2024-12-09-houston-blackout-visualization", "temp_before.png"), p1, width = 8, height = 6, dpi = 150)
-ggsave(here::here("posts/2024-12-09-houston-blackout-visualization", "temp_after.png"), p2, width = 8, height = 6, dpi = 150)
+ggsave(here::here("posts/2024-12-19-houston-blackout-visualization", "temp_before.png"), p1, width = 8, height = 6, dpi = 150)
+ggsave(here::here("posts/2024-12-19-houston-blackout-visualization", "temp_after.png"), p2, width = 8, height = 6, dpi = 150)
 
 # Create GIF
-before_img <- image_read(here::here("posts/2024-12-09-houston-blackout-visualization", "temp_before.png"))
-after_img <- image_read(here::here("posts/2024-12-09-houston-blackout-visualization", "temp_after.png"))
+before_img <- image_read(here::here("posts/2024-12-19-houston-blackout-visualization", "temp_before.png"))
+after_img <- image_read(here::here("posts/2024-12-19-houston-blackout-visualization", "temp_after.png"))
 
 # Create animation
 gif <- c(before_img, after_img, before_img, after_img) %>%
  image_animate(fps = 0.5) %>%
- image_write(here::here("posts/2024-12-09-houston-blackout-visualization", "houston_blackout.gif"))
+ image_write(here::here("posts/2024-12-19-houston-blackout-visualization", "houston_blackout.gif"))
 
 # Clean up temporary files
-file.remove(here::here("posts/2024-12-09-houston-blackout-visualization", "temp_before.png"), 
-           here::here("posts/2024-12-09-houston-blackout-visualization", "temp_after.png"))
+file.remove(here::here("posts/2024-12-19-houston-blackout-visualization", "temp_before.png"), 
+           here::here("posts/2024-12-19-houston-blackout-visualization", "temp_after.png"))
 
 gif
 ```
@@ -255,10 +255,10 @@ houses_count_table
 ```{r}
 #| output: false
 # Import census data
-acs_texas <- st_read(here::here("posts/2024-12-09-houston-blackout-visualization",
+acs_texas <- st_read(here::here("posts/2024-12-19-houston-blackout-visualization",
                                 "data", "ACS_2019_5YR_TRACT_48_TEXAS.gdb"), 
                      layer ="ACS_2019_5YR_TRACT_48_TEXAS")
-acs_income <- st_read(here::here("posts/2024-12-09-houston-blackout-visualization",
+acs_income <- st_read(here::here("posts/2024-12-19-houston-blackout-visualization",
                                  "data", "ACS_2019_5YR_TRACT_48_TEXAS.gdb"), 
                       layer = "X19_INCOME")
 ```
