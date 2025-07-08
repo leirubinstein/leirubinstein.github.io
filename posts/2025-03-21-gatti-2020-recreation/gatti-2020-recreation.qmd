@@ -5,7 +5,7 @@ date: "2025-03-21"
 description: "Recreating Results from Gatti et al, 2020"
 toc: true
 image: table4_from_paper.png
-categories: [R, Statistical Analysis]
+categories: [R, Statistical Analysis, Causal Inference, Agriculture]
 format: 
   html:
     embed-resources: true
@@ -16,6 +16,7 @@ editor_options:
 execute:
   warning: false
   message: false
+  freeze: true
 ---
 
 ## Introduction

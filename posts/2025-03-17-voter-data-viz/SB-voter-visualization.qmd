@@ -16,6 +16,7 @@ editor_options:
 execute:
   warning: false
   message: false
+  freeze: true
 ---
 
 ![Voter Registration Data Infographic](voter-data-infographic.png)

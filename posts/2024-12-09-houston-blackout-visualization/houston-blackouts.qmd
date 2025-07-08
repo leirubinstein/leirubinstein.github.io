@@ -1,0 +1,289 @@
+---
+title: "Houston Blackouts Mapping"
+author: "Leilanie Rubinstein"
+date: "2024-12-09"
+description: "Identifying impacts of extreme weather on the Texas power grid"
+categories: [R, Spatial Analysis, Remote Sensing, Energy]
+format: 
+  html: 
+    embed-resources: true
+    code-fold: false
+editor_options: 
+  chunk_output_type: console
+execute: 
+  warning: false
+  message: false
+  freeze: true
+draft: false
+---
+
+# Identifying the impacts of extreme weather
+
+```{r}
+# Load all packages
+librarian::shelf(
+  tidyverse,
+  sf,
+  terra,
+  stars,
+  raster,
+  tidyterra,
+  tmap,
+  viridis,
+  patchwork,
+  scales,
+  kableExtra,
+  janitor,
+  here,
+  testthat
+)
+```
+
+```{r}
+# Import night lights data
+night_lights1 <- terra::rast(here::here("posts/2024-12-09-houston-blackout-visualization","data", "VNP46A1/VNP46A1.A2021038.h08v05.001.2021039064328.tif"))
+night_lights2 <- terra::rast(here::here("posts/2024-12-09-houston-blackout-visualization", "data", "VNP46A1/VNP46A1.A2021038.h08v06.001.2021039064329.tif"))
+night_lights3 <- terra::rast(here::here("posts/2024-12-09-houston-blackout-visualization", "data", "VNP46A1/VNP46A1.A2021047.h08v05.001.2021048091106.tif"))
+night_lights4 <- terra::rast(here::here("posts/2024-12-09-houston-blackout-visualization", "data", "VNP46A1/VNP46A1.A2021047.h08v06.001.2021048091105.tif"))
+```
+
+```{r}
+# Merge and process night lights data, cropping to the Houston area
+houston_extent <- extent(c(-96.5, -94.5, 29, 30.5))
+
+# Check if CRS matches before merging
+if (crs(night_lights1) != crs(night_lights2)) {
+  stop("CRS does not match between night_lights1 and night_lights2")
+}
+if (crs(night_lights3) != crs(night_lights4)) {
+  stop("CRS does not match between night_lights3 and night_lights4")
+}
+
+night_lights_before <- terra::merge(night_lights1, night_lights2) %>%
+  crop(houston_extent)
+night_lights_after <- terra::merge(night_lights3, night_lights4) %>%
+  crop(houston_extent)
+
+# Create blackout mask
+night_lights_change <- night_lights_after - night_lights_before
+night_lights_change[night_lights_change > -200] <- NA
+
+
+# Vectorize blackout mask
+night_lights_change_poly <- as.polygons(night_lights_change) %>%
+  st_as_sf() %>%
+  st_make_valid() %>%
+  st_transform(crs = "EPSG:3083")
+```
+
+```{r}
+# Import infrastructure data
+roads <- read_sf(here::here("posts/2024-12-09-houston-blackout-visualization",
+                            "data", "gis_osm_roads_free_1.gpkg"), 
+                 query = "SELECT * FROM gis_osm_roads_free_1 WHERE fclass='motorway'") %>%
+  st_transform(crs = "EPSG:3083")
+
+houses <- read_sf(here::here("posts/2024-12-09-houston-blackout-visualization",
+                             "data", "gis_osm_buildings_a_free_1.gpkg"),
+                  query = "SELECT * FROM gis_osm_buildings_a_free_1 
+                         WHERE (type IS NULL AND name IS NULL)
+                         OR type in ('residential', 'apartments', 'house', 'static_caravan', 'detached')") %>%
+  st_transform(crs = "EPSG:3083")
+```
+
+```{r}
+# Create road buffer and exclude highways from blackout mask
+roads_buffer <- st_buffer(roads, dist = 200)
+blackouts_200m <- st_difference(night_lights_change_poly, st_union(roads_buffer))
+
+tm_shape(blackouts_200m) +
+  tm_polygons() + 
+  tm_layout(main.title = "Blackout Mask")
+```
+
+## Create a set of maps comparing night light intensities before and after the storms
+
+```{r}
+# Calculate common min and max for both rasters after log1p transformation
+min_val <- min(c(values(log1p(night_lights_before)), 
+                 values(log1p(night_lights_after))), na.rm = TRUE)
+max_val <- max(c(values(log1p(night_lights_before)), 
+                 values(log1p(night_lights_after))), na.rm = TRUE)
+
+p1 <- ggplot() +
+ geom_spatraster(data = log1p(night_lights_before)) +
+ scale_fill_viridis_c(name = "Light Intensity\nlog1p(nW/cm²/sr)", 
+                      option = "plasma",
+                      limits = c(min_val, max_val),
+                      na.value = "transparent",
+                      guide = guide_colorbar(
+                        title.position = "top",
+                        title.hjust = 0.5,
+                        barwidth = 1.2,
+                        barheight = 15,
+                        frame.colour = "black",
+                        frame.linewidth = 0.5,
+                        ticks.colour = "black"
+                      )) +
+ labs(title = "Nighttime Light Intensity",
+      subtitle = "Before Storm (February 7, 2021)") +
+ theme_void() +
+ theme(plot.title = element_text(hjust = 0.5, size = 14, face = "bold"),
+       plot.subtitle = element_text(hjust = 0.5, size = 10),
+       legend.position = "right")
+
+p2 <- ggplot() +
+ geom_spatraster(data = log1p(night_lights_after)) +
+ scale_fill_viridis_c(name = "Light Intensity\nlog1p(nW/cm²/sr)", 
+                      option = "plasma",
+                      limits = c(min_val, max_val),
+                      na.value = "transparent") +
+ labs(title = "Nighttime Light Intensity",
+      subtitle = "After Storm (February 16, 2021)") +
+ theme_void() +
+ theme(plot.title = element_text(hjust = 0.5, size = 14, face = "bold"),
+       plot.subtitle = element_text(hjust = 0.5, size = 10),
+       legend.position = "none")
+
+# Combine plots with vertical legend between them
+p1 + p2 + plot_layout(guides = "collect")
+```
+
+## Create a map of the homes in Houston that lost power
+
+```{r}
+# houses_filtered <- houses[blackouts_200m, ]
+
+# Convert blackouts to a raster/stars object
+blackouts_raster <- st_rasterize(blackouts_200m, 
+                                 dx = 100, 
+                                 dy = 100)
+
+# Convert houses to points (centroids) for faster processing
+houses_points <- st_centroid(houses)
+
+# Extract values at house locations
+house_values <- st_extract(blackouts_raster, houses_points)
+
+# Filter houses based on extracted values
+houses_filtered <- houses[!is.na(house_values[[1]]), ]
+
+tm_shape(houses_filtered) +
+  tm_dots(col = "#CBC3E3") +
+  tm_compass(type = "8star",
+             size = 0.8) +
+  tm_scale_bar() +
+  tm_layout(main.title = "Homes in Houston that Lost Power")
+```
+
+## Estimate the number of homes in Houston that lost power
+
+```{r}
+nrow(houses_filtered)
+
+houses_count <- houses_filtered %>%
+  group_by(type) %>%
+  summarize(count = n()) %>%
+  ungroup() %>%
+  st_drop_geometry()
+
+# Check that the sum of buildings adds up to the number of rows in `houses_filtered` 
+testthat::expect_equal(sum(houses_count$count), nrow(houses_filtered))
+
+houses_count_table <- houses_count %>%
+  kbl(caption = "Number of homes that experienced power loss (total = 157967)") %>%
+  kable_classic(html_font = "Cambria")
+
+houses_count_table
+```
+
+## Create a map of the census tracts in Houston that lost power
+
+```{r}
+# Import census data
+acs_texas <- st_read(here::here("posts/2024-12-09-houston-blackout-visualization",
+                                "data", "ACS_2019_5YR_TRACT_48_TEXAS.gdb"), 
+                     layer ="ACS_2019_5YR_TRACT_48_TEXAS")
+acs_income <- st_read(here::here("posts/2024-12-09-houston-blackout-visualization",
+                                 "data", "ACS_2019_5YR_TRACT_48_TEXAS.gdb"), 
+                      layer = "X19_INCOME")
+
+# Join the median household income from the previous 12 months to the census tract geometries
+acs <- left_join(acs_income, acs_texas, join_by(GEOID == GEOID_Data)) %>%
+  st_as_sf() %>%
+  st_make_valid() %>%
+  st_transform(crs = "EPSG:3083")
+
+# Create a bounding box for the Houston area
+houston_bbox <- st_bbox(c(xmin = -96.5, xmax = -94.5, 
+                          ymin = 29, ymax = 30.5)) %>%
+  st_as_sfc() %>%
+  st_set_crs(4326) %>%
+  st_transform(st_crs(acs))
+
+# Filter to Houston area census tracts
+houston_tracts <- acs[houston_bbox, ]
+
+# Identify census tracts that contained homes that experienced blackouts
+houston_tracts_blackouts <- st_filter(houston_tracts, houses_filtered)
+
+tm_shape(houston_tracts) +
+  tm_polygons(col = "white", border.col = "gray") +
+  tm_shape(houston_tracts_blackouts) +
+  tm_polygons(col = "#CBC3E3", border.col = "black", lwd = 0.5) +
+  tm_compass(type = "8star", position = c("right", "top"), size = 0.8) +
+  tm_scale_bar(position = c("left", "bottom")) +
+  tm_layout(main.title = "Census Tracts in Houston that Experienced Blackouts",
+            main.title.position = "center",
+            main.title.size = 1.2,
+            frame = FALSE)
+```
+
+## Compare the distributions of median household income for census tracts tnihat did and did not experience blackouts
+
+```{r}
+# Find census tracts that did NOT experience blackouts
+houston_non_blackout <- houston_tracts %>%
+  filter(!GEOID %in% houston_tracts_blackouts$GEOID)
+
+# Label tracts by power status
+houston_tracts_blackouts$status <- "Lost Power"
+houston_non_blackout$status <- "Did Not Lose Power"
+combined_tracts <- rbind(houston_tracts_blackouts, houston_non_blackout)
+
+# Reorder the factor levels to put "Did Not Lose Power" first
+combined_tracts$status <- factor(combined_tracts$status, 
+                                levels = c("Did Not Lose Power", "Lost Power"))
+
+# Plot combined tracts
+ggplot(combined_tracts, aes(y = status, x = B19013e1, fill = status)) +
+  geom_boxplot(alpha = 0.8, outlier.alpha = 0.6) +
+  labs(title = "Distribution of Median Household Income by Power Loss Status",
+       subtitle = "Houston Census Tracts During February 2021 Winter Storm",
+       x = "Median Household Income (2011 inflation-adjusted dollars)",
+       y = "Power Status",
+       fill = "Power Status") +
+  scale_fill_manual(values = c("Did Not Lose Power" = "lightgreen", 
+                               "Lost Power" = "#CBC3E3")) +
+  scale_x_continuous(labels = scales::dollar_format()) +
+  theme_bw() +
+  theme(legend.position = "none",
+        plot.title = element_text(size = 14, face = "bold"),
+        plot.subtitle = element_text(size = 12),
+        axis.title = element_text(size = 11),
+        axis.text = element_text(size = 10))
+```
+
+## Reflection
+
+I found that median household income was slightly higher in the census tracts that lost power vs. those that did not lose power. Census tracts on the outskirts of the Houston area generally experienced less power loss, but most of the majority of tracts were still affected. According to [Busby et al.](https://www.sciencedirect.com/science/article/pii/S2214629621001997), all socio-economic groups were affected, but the effects of the storm were harder on low-income families, who live in older, poorly insulated homes and have limited access to resources for repairs and physical health after the storm. 
+
+## Data Citations
+
+| Data | Citation | Link |
+|------|----------|------|
+| Night Lights | NASA Earth Data (2024). Level-1 and Atmospheric Archive & Distribution System Distributed Active Archive Center (LAADS DAAC) | [Level-1 and Atmospheric Archive & Distribution System Distributed Active Archive Center (LAADS DAAC).](https://ladsweb.modaps.eosdis.nasa.gov/) |
+| Infrastructure Data | Planet OSM (2024). Retrieved from https://download.geofabrik.de/ | [Link](https://planet.openstreetmap.org/) | 
+| Census Data |U.S. Census Bureau. (2019). American Community Survey 1-year Public Use Microdata Samples.  Retrieved from https://www.census.gov/programs-surveys/acs/news/data-releases.2019.html#list-tab-1133175109 | [Link] (https://www.census.gov/programs-surveys/acs/news/data-releases.2019.html#list-tab-1133175109) | 
+| Understanding the 2021 Texas Blackout | Busby, J. W., Baker, K., Bazilian, M. D., Gilbert, A. Q., Grubert, E., Rai, V., Rhodes, J. D., Shidore, S., Smith, C. A., & Webber, M. E. (2021). Cascading risks: Understanding the 2021 winter blackout in Texas. Energy Research & Social Science, 77, 102106. https://doi.org/10.1016/j.erss.2021.102106 | [Cascading risks: Understanding the 2021 winter blackout in Texas](https://www.sciencedirect.com/science/article/pii/S2214629621001997)
+

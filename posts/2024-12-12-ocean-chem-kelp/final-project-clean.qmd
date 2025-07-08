@@ -1,9 +1,11 @@
 ---
 title: "Ocean Chemistry and Santa Barbara Channel Macrocystis Pyrifera Populations"
 author: "Leilanie Rubinstein"
-date: last-modified
+date: "2024-12-12"
 description: "Investigating whether ocean chemistry has an impact on kelp forest biomass in the Santa Barbara Channel"
-format: html
+format: 
+  html:
+    embed-resources: true
 categories: [R, Marine, Statistical Analysis]
 image: DSC_4341.jpg
 editor: visual
@@ -12,6 +14,7 @@ editor_options:
 execute: 
   warning: false
   message: false
+  freeze: true
 code-fold: true
 ---
 
@@ -295,7 +298,7 @@ For future research, I would like to analyze Thomas Fire effects on kelp growth 
 
 ## Data Citations
 
-| Data                                                                                                                          | Citation                                                                                                                                                                                                                                                                                                                 | Link                                                                          |
-|-----------------|--------------------------------------|-----------------|
+| Data | Citation | Link |
+|------------------|-------------------------------------|------------------|
 | SBC LTER: Ocean: Ocean Currents and Biogeochemistry: Nearshore water profiles (monthly CTD and chemistry), ongoing since 2000 | Washburn, L., M. Brzezinski, C. Carlson, and D. Siegel. 2024. SBC LTER: Ocean: Ocean Currents and Biogeochemistry: Nearshore water profiles (monthly CTD and chemistry), ongoing since 2000 ver 31. Environmental Data Initiative. https://doi.org/10.6073/pasta/cc75e947e0137e1594ebd8ce4b4a8880 (Accessed 2024-12-09). | <https://portal.edirepository.org/nis/mapbrowse?packageid=knb-lter-sbc.10.31> |
-| SBC LTER: Reef: Annual time series of biomass for kelp forest species, ongoing since 2000                                     | Reed, D. and R. Miller. 2024. SBC LTER: Reef: Annual time series of biomass for kelp forest species, ongoing since 2000 ver 17. Environmental Data Initiative. https://doi.org/10.6073/pasta/6587ad06e299e566e2092d1268dc206b (Accessed 2024-12-10).                                                                     | <https://portal.edirepository.org/nis/mapbrowse?packageid=knb-lter-sbc.50.17> |
+| SBC LTER: Reef: Annual time series of biomass for kelp forest species, ongoing since 2000 | Reed, D. and R. Miller. 2024. SBC LTER: Reef: Annual time series of biomass for kelp forest species, ongoing since 2000 ver 17. Environmental Data Initiative. https://doi.org/10.6073/pasta/6587ad06e299e566e2092d1268dc206b (Accessed 2024-12-10). | <https://portal.edirepository.org/nis/mapbrowse?packageid=knb-lter-sbc.50.17> |

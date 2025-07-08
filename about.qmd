@@ -8,7 +8,7 @@ editor_options:
 
 ## Welcome
 
-Hi there! My name is Leilanie Rubinstein, and I'm a graduate student at the Bren School of Environmental Science & Management in Santa Barbara, California. This is my personal website and data science blog (along with a few photos I've taken).
+Hi there! My name is Leilanie Rubinstein, and I'm recent graduate of the Bren School of Environmental Science & Management in Santa Barbara, California. This is my personal website and data science blog (along with a few photos I've taken).
 
 ## Background
 
@@ -16,9 +16,32 @@ I'm from [Palm Springs, CA](https://visitpalmsprings.com/), a desert town in the
 
 ![Windmills outside of Palm Springs](media/DSC_9137.jpg)
 
-Desert cities are a testament to humanity's hubris-- how and why would we *choose* to build a place where the summers are so hot that the asphalt begins to melt? Growing up in this environment primed me to care about the impacts of climate change from an early age. Extreme heat and drought, among other consequences, affect socioeconomically disadvantaged populations the most.
+Growing up in a place where the summers are so hot that the asphalt begins to melt primed me to care about the impacts of climate change from an early age. Extreme heat and drought, among other consequences, affect socioeconomically disadvantaged populations the most.
+
+```{=html}
+<div id="map" style="height: 400px; width: 100%;"></div>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+
+<script>
+var map = L.map('map').setView([33.8303, -116.5453], 12);
+
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '© OpenStreetMap contributors'
+}).addTo(map);
+
+L.marker([33.8303, -116.5453])
+    .addTo(map)
+    .bindPopup('Palm Springs, CA');
+</script>
+```
+
+*Interactive map*
 
 My motivation for pursuing a career in environmental data science stems from wanting to understand how we can better serve our communities and ecosystems impacted by climate change. I strongly believe that data-driven solutions promote better public policy.
+
+
 
 <!-- ## What I do for work -->
 
