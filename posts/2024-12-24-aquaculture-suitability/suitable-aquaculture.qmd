@@ -5,7 +5,6 @@ date: "2024-12-11"
 categories: [R, Marine, Geospatial Analysis]
 description: "Determining and visualizing which West Coast EEZs are best suited to developing species-specific marine aquaculture"
 format: html
-editor: visual
 editor_options: 
   chunk_output_type: console
 execute:

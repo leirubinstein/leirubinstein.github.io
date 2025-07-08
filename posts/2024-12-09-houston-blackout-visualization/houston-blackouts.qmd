@@ -1,13 +1,16 @@
 ---
 title: "Houston Blackouts Mapping"
 author: "Leilanie Rubinstein"
-date: "2024-12-09"
+date: "2024-12-19"
 description: "Identifying impacts of extreme weather on the Texas power grid"
 categories: [R, Spatial Analysis, Remote Sensing, Energy]
+image: houston_blackout.gif
 format: 
   html: 
     embed-resources: true
-    code-fold: false
+    code-fold: true
+    code-summary: "show code"
+    code-tools: true
 editor_options: 
   chunk_output_type: console
 execute: 
@@ -19,6 +22,10 @@ draft: false
 
 # Identifying the impacts of extreme weather
 
+During February of 2021, Texas suffered a major power crisis resulting from three unusually severe winter storms. Here, we visualize the impacts of extreme weather on Houston's power grid by estimating the number of homes in the Houston metropolitan area that lost power and investigating whether not these impacts were disproportionately felt.etu
+
+## Setup
+
 ```{r}
 # Load all packages
 librarian::shelf(
@@ -28,6 +35,8 @@ librarian::shelf(
   stars,
   raster,
   tidyterra,
+  gganimate,
+  magick,
   tmap,
   viridis,
   patchwork,
@@ -40,6 +49,7 @@ librarian::shelf(
 ```
 
 ```{r}
+#| output: false
 # Import night lights data
 night_lights1 <- terra::rast(here::here("posts/2024-12-09-houston-blackout-visualization","data", "VNP46A1/VNP46A1.A2021038.h08v05.001.2021039064328.tif"))
 night_lights2 <- terra::rast(here::here("posts/2024-12-09-houston-blackout-visualization", "data", "VNP46A1/VNP46A1.A2021038.h08v06.001.2021039064329.tif"))
@@ -68,7 +78,6 @@ night_lights_after <- terra::merge(night_lights3, night_lights4) %>%
 night_lights_change <- night_lights_after - night_lights_before
 night_lights_change[night_lights_change > -200] <- NA
 
-
 # Vectorize blackout mask
 night_lights_change_poly <- as.polygons(night_lights_change) %>%
   st_as_sf() %>%
@@ -77,6 +86,7 @@ night_lights_change_poly <- as.polygons(night_lights_change) %>%
 ```
 
 ```{r}
+#| output: false
 # Import infrastructure data
 roads <- read_sf(here::here("posts/2024-12-09-houston-blackout-visualization",
                             "data", "gis_osm_roads_free_1.gpkg"), 
@@ -101,7 +111,7 @@ tm_shape(blackouts_200m) +
   tm_layout(main.title = "Blackout Mask")
 ```
 
-## Create a set of maps comparing night light intensities before and after the storms
+## Maps comparing night light intensities before and after the storms
 
 ```{r}
 # Calculate common min and max for both rasters after log1p transformation
@@ -149,7 +159,50 @@ p2 <- ggplot() +
 p1 + p2 + plot_layout(guides = "collect")
 ```
 
-## Create a map of the homes in Houston that lost power
+Create an animated image
+
+```{r}
+# Create static plots without legends or titles
+p1 <- ggplot() +
+ geom_spatraster(data = log1p(night_lights_before)) +
+ scale_fill_viridis_c(option = "plasma",
+                      limits = c(min_val, max_val),
+                      na.value = "transparent") +
+ theme_void() +
+ theme(legend.position = "none",
+       plot.margin = margin(0, 0, 0, 0))
+
+p2 <- ggplot() +
+ geom_spatraster(data = log1p(night_lights_after)) +
+ scale_fill_viridis_c(option = "plasma",
+                      limits = c(min_val, max_val),
+                      na.value = "transparent") +
+ theme_void() +
+ theme(legend.position = "none",
+       plot.margin = margin(0, 0, 0, 0))
+
+# Save temporary plots
+ggsave(here::here("posts/2024-12-09-houston-blackout-visualization", "temp_before.png"), p1, width = 8, height = 6, dpi = 150)
+ggsave(here::here("posts/2024-12-09-houston-blackout-visualization", "temp_after.png"), p2, width = 8, height = 6, dpi = 150)
+
+# Create GIF
+before_img <- image_read(here::here("posts/2024-12-09-houston-blackout-visualization", "temp_before.png"))
+after_img <- image_read(here::here("posts/2024-12-09-houston-blackout-visualization", "temp_after.png"))
+
+# Create animation
+gif <- c(before_img, after_img, before_img, after_img) %>%
+ image_animate(fps = 0.5) %>%
+ image_write(here::here("posts/2024-12-09-houston-blackout-visualization", "houston_blackout.gif"))
+
+# Clean up temporary files
+file.remove(here::here("posts/2024-12-09-houston-blackout-visualization", "temp_before.png"), 
+           here::here("posts/2024-12-09-houston-blackout-visualization", "temp_after.png"))
+
+gif
+```
+
+
+## Map of the homes in Houston that lost power
 
 ```{r}
 # houses_filtered <- houses[blackouts_200m, ]
@@ -200,6 +253,7 @@ houses_count_table
 ## Create a map of the census tracts in Houston that lost power
 
 ```{r}
+#| output: false
 # Import census data
 acs_texas <- st_read(here::here("posts/2024-12-09-houston-blackout-visualization",
                                 "data", "ACS_2019_5YR_TRACT_48_TEXAS.gdb"), 
@@ -207,7 +261,9 @@ acs_texas <- st_read(here::here("posts/2024-12-09-houston-blackout-visualization
 acs_income <- st_read(here::here("posts/2024-12-09-houston-blackout-visualization",
                                  "data", "ACS_2019_5YR_TRACT_48_TEXAS.gdb"), 
                       layer = "X19_INCOME")
+```
 
+```{r}
 # Join the median household income from the previous 12 months to the census tract geometries
 acs <- left_join(acs_income, acs_texas, join_by(GEOID == GEOID_Data)) %>%
   st_as_sf() %>%
@@ -239,7 +295,7 @@ tm_shape(houston_tracts) +
             frame = FALSE)
 ```
 
-## Compare the distributions of median household income for census tracts tnihat did and did not experience blackouts
+## Compare the distributions of median household income for census tracts that did and did not experience blackouts
 
 ```{r}
 # Find census tracts that did NOT experience blackouts
@@ -284,6 +340,6 @@ I found that median household income was slightly higher in the census tracts th
 |------|----------|------|
 | Night Lights | NASA Earth Data (2024). Level-1 and Atmospheric Archive & Distribution System Distributed Active Archive Center (LAADS DAAC) | [Level-1 and Atmospheric Archive & Distribution System Distributed Active Archive Center (LAADS DAAC).](https://ladsweb.modaps.eosdis.nasa.gov/) |
 | Infrastructure Data | Planet OSM (2024). Retrieved from https://download.geofabrik.de/ | [Link](https://planet.openstreetmap.org/) | 
-| Census Data |U.S. Census Bureau. (2019). American Community Survey 1-year Public Use Microdata Samples.  Retrieved from https://www.census.gov/programs-surveys/acs/news/data-releases.2019.html#list-tab-1133175109 | [Link] (https://www.census.gov/programs-surveys/acs/news/data-releases.2019.html#list-tab-1133175109) | 
+| Census Data |U.S. Census Bureau. (2019). American Community Survey 1-year Public Use Microdata Samples.  Retrieved from https://www.census.gov/programs-surveys/acs/news/data-releases.2019.html#list-tab-1133175109 | [Link](https://www.census.gov/programs-surveys/acs/news/data-releases.2019.html#list-tab-1133175109) | 
 | Understanding the 2021 Texas Blackout | Busby, J. W., Baker, K., Bazilian, M. D., Gilbert, A. Q., Grubert, E., Rai, V., Rhodes, J. D., Shidore, S., Smith, C. A., & Webber, M. E. (2021). Cascading risks: Understanding the 2021 winter blackout in Texas. Energy Research & Social Science, 77, 102106. https://doi.org/10.1016/j.erss.2021.102106 | [Cascading risks: Understanding the 2021 winter blackout in Texas](https://www.sciencedirect.com/science/article/pii/S2214629621001997)
 
