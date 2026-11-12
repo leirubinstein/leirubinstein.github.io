@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>About Me – Leilanie Rubinstein</title>
+<title>Leilanie Rubinstein</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -34,7 +34,6 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="site_libs/quarto-html/quarto-syntax-highlighting-e26003cea8cd680ca0c55a263523d882.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
@@ -99,7 +98,7 @@ ul.task-list li input[type="checkbox"] {
   </li>  
   <li class="nav-item">
     <a class="nav-link active" href="./about.html" aria-current="page"> 
-<span class="menu-text">About Me</span></a>
+<span class="menu-text">Leilanie Rubinstein</span></a>
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="./posts.html"> 
@@ -127,7 +126,6 @@ ul.task-list li input[type="checkbox"] {
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         <nav id="TOC" role="doc-toc" class="toc-active">
     <h2 id="toc-title">On this page</h2>
-   
   <ul>
   <li><a href="#welcome" id="toc-welcome" class="nav-link active" data-scroll-target="#welcome">Welcome</a></li>
   <li><a href="#background" id="toc-background" class="nav-link" data-scroll-target="#background">Background</a></li>
@@ -135,33 +133,40 @@ ul.task-list li input[type="checkbox"] {
 </nav>
     </div>
 <!-- main -->
-<main class="content column-page-left" id="quarto-document-content">
-
+<div class="quarto-about-trestles column-page-left">
+  <div class="about-entity">
+    <img src="media/headshot.jpg" class="about-image
+  rounded " style="width: 17em;">
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">About Me</h1>
+<h1 class="title">Leilanie Rubinstein</h1>
 </div>
-
-
-
 <div class="quarto-title-meta column-page-left">
-
-    
-  
-    
   </div>
-  
-
-
 </header>
-
+    <div class="about-links">
+  <a href="https://www.linkedin.com/in/leilanie-rubinstein/" class="about-link" rel="" target="">
+    <i class="bi bi-linkedin"></i>
+     <span class="about-link-text">LinkedIn</span>
+  </a>
+  <a href="https://github.com/leirubinstein/" class="about-link" rel="" target="">
+    <i class="bi bi-github"></i>
+     <span class="about-link-text">GitHub</span>
+  </a>
+  <a href="mailto:leilanierubinstein@gmail.com" class="about-link" rel="" target="">
+    <i class="bi bi-envelope"></i>
+     <span class="about-link-text">Email</span>
+  </a>
+</div>
+  </div>
+  <div class="about-contents"><main class="content column-page-left" id="quarto-document-content">
 
 <section id="welcome" class="level2">
-<h2 class="anchored" data-anchor-id="welcome">Welcome</h2>
+<h2 data-anchor-id="welcome">Welcome</h2>
 <p>Hi there! My name is Leilanie Rubinstein, and I’m recent graduate of the Bren School of Environmental Science &amp; Management in Santa Barbara, California. This is my personal website and data science blog (along with a few photos I’ve taken).</p>
 </section>
 <section id="background" class="level2">
-<h2 class="anchored" data-anchor-id="background">Background</h2>
+<h2 data-anchor-id="background">Background</h2>
 <p>I’m from <a href="https://visitpalmsprings.com/">Palm Springs, CA</a>, a desert town in the Coachella Valley of Southern California.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
@@ -171,17 +176,13 @@ ul.task-list li input[type="checkbox"] {
 </div>
 <p>Growing up in a place where the summers are so hot that the asphalt begins to melt primed me to care about the impacts of climate change from an early age. Extreme heat and drought, among other consequences, affect socioeconomically disadvantaged populations the most.</p>
 <div id="map" style="height: 400px; width: 100%;"></div>
-
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
-
 <script>
 var map = L.map('map').setView([33.8303, -116.5453], 12);
-
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '© OpenStreetMap contributors'
 }).addTo(map);
-
 L.marker([33.8303, -116.5453])
     .addTo(map)
     .bindPopup('Palm Springs, CA');
@@ -200,8 +201,9 @@ L.marker([33.8303, -116.5453])
 
 
 </section>
-
-</main> <!-- /main -->
+</main></div>
+</div>
+ <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
@@ -222,13 +224,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
   }
   toggleBodyColorPrimary();  
-  const icon = "";
-  const anchorJS = new window.AnchorJS();
-  anchorJS.options = {
-    placement: 'right',
-    icon: icon
-  };
-  anchorJS.add('.anchored');
   const isCodeAnnotation = (el) => {
     for (const clz of el.classList) {
       if (clz.startsWith('code-annotation-')) {                     

@@ -1,7 +1,21 @@
 ---
-title: "About Me"
+title: "Leilanie Rubinstein"
 toc: true
 format: html
+image: media/headshot.jpg
+about:
+  template: trestles
+  image-width: 17em
+  links:
+    - text: LinkedIn
+      icon: linkedin
+      href: https://www.linkedin.com/in/leilanie-rubinstein/
+    - text: GitHub
+      icon: github
+      href: https://github.com/leirubinstein/
+    - text: Email
+      icon: envelope
+      href: mailto:leilanierubinstein@gmail.com
 editor_options: 
   chunk_output_type: console
 ---

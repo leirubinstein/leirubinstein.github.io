@@ -113,7 +113,9 @@ theme_voter_viz <- function(base_size = 20, base_family = "EBGaramond") {
 #| output: false
 # -------------- Load data --------------
 full_file <- read_delim(
-    here::here("posts/2025-03-17-voter-data-viz/data/Countywide_Voter Registration 030325.TXT"),
+    here::here(
+        "posts/2025-03-17-voter-data-viz/data/Countywide_Voter Registration 030325.TXT"
+    ),
     delim = "\t"
 ) %>%
     clean_names()
@@ -156,11 +158,17 @@ full_file <- read_delim(
 #
 # final_census_df <- geocode_addresses()
 
-final_census_df <- readRDS(here::here("posts/2025-03-17-voter-data-viz/data/geocoded_addresses.rds"))
+final_census_df <- readRDS(here::here(
+    "posts/2025-03-17-voter-data-viz/data/geocoded_addresses.rds"
+))
 
 # File paths for saved data
-sb_pop_path <- here::here("posts/2025-03-17-voter-data-viz/data/sb_pop_2023.rds")
-sb_blocks_path <- here::here("posts/2025-03-17-voter-data-viz/data/sb_blocks_2020.rds")
+sb_pop_path <- here::here(
+    "posts/2025-03-17-voter-data-viz/data/sb_pop_2023.rds"
+)
+sb_blocks_path <- here::here(
+    "posts/2025-03-17-voter-data-viz/data/sb_blocks_2020.rds"
+)
 
 # Check if files exist, otherwise create and save them
 if (!file.exists(sb_pop_path)) {
@@ -340,7 +348,11 @@ labels <- sapply(breaks, function(x) {
 # Create divergent plot
 ggplot() +
     geom_sf(data = block_diff_map, aes(fill = diff), color = NA, size = 0.5) +
-    geom_sf(data = filter(block_diff_map, is.na(diff)), fill = "gray80", color = "gray30") +
+    geom_sf(
+        data = filter(block_diff_map, is.na(diff)),
+        fill = "gray80",
+        color = "gray30"
+    ) +
     scale_fill_gradient2(
         low = party_colors["REP"],
         mid = "#FFFFFF",
@@ -413,7 +425,11 @@ south_county_bbox <- tigris::places(state = "CA", cb = TRUE) %>%
 ```{r}
 ggplot() +
     geom_sf(data = block_diff_map, aes(fill = diff), color = NA, size = 0.5) +
-    geom_sf(data = filter(block_diff_map, is.na(diff)), fill = "gray80", color = "gray30") +
+    geom_sf(
+        data = filter(block_diff_map, is.na(diff)),
+        fill = "gray80",
+        color = "gray30"
+    ) +
     scale_fill_gradient2(
         low = party_colors["REP"],
         mid = "#FFFFFF",
@@ -500,30 +516,30 @@ Note that UCSB is missing from the data. This could be because the census design
 # --------------- Visualization 2: Party Proportions Waffle Chart --------------
 # Create waffle chart of party distribution
 waffle_counts <- full_file %>%
-  mutate(
-    party_code = if_else(
-      party_code %in% c("DEM", "REP", "NPP", "AI"),
-      party_code,
-      "Other"
-    )
-  ) %>%
-  count(party_code) %>%
-  mutate(
-    percent = n / sum(n) * 100,
-    party_name = case_when(
-      party_code == "DEM" ~ "Democrat",
-      party_code == "REP" ~ "Republican",
-      party_code == "NPP" ~ "No Party Preference",
-      party_code == "AI" ~ "American Independent",
-      TRUE ~ "Other"
-    ),
-    party_label = paste0(party_name, " (", round(percent, 1), "%)"),
-    party_code = factor(
-      party_code,
-      levels = c("DEM", "REP", "NPP", "AI", "Other")
-    )
-  ) %>%
-  arrange(party_code)
+    mutate(
+        party_code = if_else(
+            party_code %in% c("DEM", "REP", "NPP", "AI"),
+            party_code,
+            "Other"
+        )
+    ) %>%
+    count(party_code) %>%
+    mutate(
+        percent = n / sum(n) * 100,
+        party_name = case_when(
+            party_code == "DEM" ~ "Democrat",
+            party_code == "REP" ~ "Republican",
+            party_code == "NPP" ~ "No Party Preference",
+            party_code == "AI" ~ "American Independent",
+            TRUE ~ "Other"
+        ),
+        party_label = paste0(party_name, " (", round(percent, 1), "%)"),
+        party_code = factor(
+            party_code,
+            levels = c("DEM", "REP", "NPP", "AI", "Other")
+        )
+    ) %>%
+    arrange(party_code)
 
 # Create named vector for legend labels
 party_labels <- setNames(
@@ -537,36 +553,36 @@ party_colors_updated["AI"] <- "gray40"
 
 # Create waffle chart
 ggplot(waffle_counts, aes(fill = party_code, values = n)) +
-  geom_waffle(
-    color = "white", 
-    size = 2.5, 
-    n_rows = 10,
-    make_proportional = TRUE
-  ) +
-  scale_fill_manual(
-    values = party_colors_updated,
-    labels = party_labels
-  ) +
-  coord_fixed() +
-  theme_voter_viz() +
-  theme(
-    axis.text = element_blank(),
-    axis.title = element_blank(),
-    axis.ticks = element_blank(),
-    axis.line = element_blank(),
-    legend.spacing.x = unit(1.0, "cm"),
-    legend.spacing.y = unit(1.0, "cm"),
-  ) +
-  labs(
-    title = "Party Distribution in Santa Barbara County",
-    fill = "Party"
-  )
+    geom_waffle(
+        color = "white",
+        size = 2.5,
+        n_rows = 10,
+        make_proportional = TRUE
+    ) +
+    scale_fill_manual(
+        values = party_colors_updated,
+        labels = party_labels
+    ) +
+    coord_fixed() +
+    theme_voter_viz() +
+    theme(
+        axis.text = element_blank(),
+        axis.title = element_blank(),
+        axis.ticks = element_blank(),
+        axis.line = element_blank(),
+        legend.spacing.x = unit(1.0, "cm"),
+        legend.spacing.y = unit(1.0, "cm"),
+    ) +
+    labs(
+        title = "Party Distribution in Santa Barbara County",
+        fill = "Party"
+    )
 
 ggsave(
-  "party_waffle_chart.svg",
-  path = here::here("posts/2025-03-17-voter-data-viz/media"),
-  width = 16,
-  height = 13
+    "party_waffle_chart.svg",
+    path = here::here("posts/2025-03-17-voter-data-viz/media"),
+    width = 16,
+    height = 13
 )
 ```
 
@@ -835,10 +851,10 @@ daily_registrations <- full_file %>%
 
 # Count total number of registrations on key dates
 daily_registrations_lookup <- full_file %>%
-  filter(
-    registration_date %in% c("2024-03-05", "2024-10-21", "2024-11-05")
-  ) %>%
-  count(registration_date)
+    filter(
+        registration_date %in% c("2024-03-05", "2024-10-21", "2024-11-05")
+    ) %>%
+    count(registration_date)
 
 # Create reference dates
 reference_dates <- tibble(
