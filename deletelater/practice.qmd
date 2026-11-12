@@ -1,7 +1,0 @@
-# Here is my level one header
-
-Here is my first paragraph
-
-Here is my second paragraph, where you can read more about [MEDS](https://bren.ucsb.edu/masters-programs/master-environmental-data-science).
-
-This is very important text!

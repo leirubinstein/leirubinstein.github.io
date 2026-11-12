@@ -8,7 +8,6 @@ categories: [R, Data Visualization, Spatial Analysis, Political Data]
 image: voter-data-infographic.png
 format: 
   html:
-    embed-resources: true
     code-fold: true
     code-summary: "Show code"
 editor_options: 

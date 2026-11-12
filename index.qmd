@@ -1,26 +1,39 @@
 ---
 title: "Leilanie Rubinstein"
-image: media/headshot.jpg
-# 2toc: false
-about: 
-  template: jolla
-  image-shape: round
-  image-width: 17em
+image: images/headshot.jpg
+image-alt: "Leilanie Rubinstein standing in a field of wildflowers"
+aliases:
+  - about.html
+toc: false
+about:
+  template: trestles
+  image-shape: rectangle
+  image-width: 22em
   links:
-    - text: LinkedIn
-      icon: linkedin
+    - icon: github
+      text: GitHub
+      href: https://github.com/leirubinstein
+    - icon: linkedin
+      text: LinkedIn
       href: https://www.linkedin.com/in/leilanie-rubinstein/
-    - text: GitHub
-      icon: github
-      href: https://github.com/leirubinstein/
-    - text: Email
-      icon: envelope
+    - icon: envelope
+      text: Email
       href: mailto:leilanierubinstein@gmail.com
-  
+    - icon: file-earmark-text
+      text: CV
+      href: cv.qmd
 ---
 
-I earned my Bachelor of Arts in Political Science and Environmental Studies from the University of California, Santa Barbara in 2021. Inspired by Santa Barbara’s legacy of environmental activism, I have dedicated myself to running local and federal campaigns with social justice and conservation-driven values for the past seven years. Following my undergraduate degree, I worked at an environmental law firm, specializing in litigation and regulatory disputes relating to remediation of Superfund sites. My professional experience includes roles in political organizing, legislation, and environmental law, where I honed skills in public communication, community engagement, and environmental policy analysis.
+I am an environmental data scientist with the [Global Policy Lab](https://www.globalpolicy.science/) in the Stanford Doerr School of Sustainability. Currently, we are researching urban development, land use transitions, and long-term impacts of protected areas in twentieth century sub-Saharan Africa by applying machine learning techniques to a digitized archive of 1.6 million historical aerial photos.
 
-As a recent graduate with a Master of Environmental Data Science from the Bren School of Environmental Science & Management, I aspire to work in environmental economics or policy research, or for local government. I aim to leverage remote sensing and machine learning techniques to develop solutions for resource management and climate change mitigation, promoting sustainable practices and enhancing climate resilience locally and globally.
+I earned my [Master of Environmental Data Science](https://bren.ucsb.edu/masters-programs/master-environmental-data-science) from the Bren School of Environmental Science & Management in 2025, and B.A.s in Political Science and Environmental Studies from UCSB in 2021. Before that, I worked at an environmental law firm specializing in Superfund remediation litigation, and spent years organizing local and federal campaigns rooted in social justice and conservation.
 
-In my free time, I enjoy cycling, gaming, and exploring nature and the night sky through my camera lens. Check out some of my photography [here](https://leirubinstein.github.io/nature-photography.html).
+I grew up in [Palm Springs, CA](https://visitpalmsprings.com/), where summers get hot enough to melt the asphalt. Experiencing extreme heat as a child primed me to care about climate change early, and I am interested in questions about whether environmental or spatial factors shape our support for climate policies.
+
+Outside of work, I enjoy cycling, quilting, and [photographing](photos.qmd) nature.
+
+Recent work:
+
+- Land cover change and protected area impact from a mega-archive of historical aerial imagery (in preparation)
+- [Remote Sensing of Defensible Space Compliance to Enhance Wildfire Preparedness](https://bren.ucsb.edu/projects/remote-sensing-defensible-space-compliance-enhance-wildfire-preparedness) (Master's Capstone, 2025)
+- [Santa Barbara County political mapping and voter registration analysis](posts/2025-03-17-voter-data-viz/SB-voter-visualization.qmd) (2025)

@@ -1,10 +1,23 @@
-.Rproj.user
+# R / RStudio
+.Rproj.user/
 .Rhistory
-.Rdata
+.Rapp.history
+.RData
+.Ruserdata
 .httr-oauth
-.DS_Store
-.quarto
+.Renviron
 
+# Quarto
 /.quarto/
+**/*.quarto_ipynb
+*_files/libs/
 
-*data/
+# Large inputs: post datasets and full-resolution photo originals
+data/
+_photos-src/
+
+# Design source files
+*.afdesign
+
+# macOS
+.DS_Store

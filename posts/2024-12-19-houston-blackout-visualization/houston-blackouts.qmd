@@ -7,7 +7,6 @@ categories: [R, Spatial Analysis, Remote Sensing, Energy]
 image: houston_blackout.gif
 format: 
   html: 
-    embed-resources: true
     code-fold: true
     code-summary: "show code"
     code-tools: true

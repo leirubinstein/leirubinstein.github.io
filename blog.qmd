@@ -1,0 +1,18 @@
+---
+title: "Blog"
+subtitle: "Data science projects and write-ups from school, work, and fun."
+aliases:
+  - posts.html
+listing:
+  contents: posts
+  sort: "date desc"
+  type: default
+  categories: true
+  sort-ui: false
+  filter-ui: true
+  feed:
+    type: metadata
+page-layout: full
+title-block-banner: false
+toc: false
+---

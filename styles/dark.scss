@@ -1,0 +1,39 @@
+/*-- scss:defaults --*/
+
+// Palette
+$ink:         #18191d;   // background
+$ink-deep:    #111215;   // navbar
+$lilac:       #d4bcc9;   // body text
+$pale-yellow: #f1e7b8;   // headings, links, highlights
+$lilac-dim:   mix($lilac, $ink, 65%);
+$line:        mix($lilac, $ink, 25%);
+
+$primary: $pale-yellow;
+$secondary: $lilac-dim;
+$body-bg: $ink;
+$body-color: $lilac;
+$body-secondary-color: $lilac-dim;
+$link-color: $pale-yellow;
+$border-color: $line;
+
+$navbar-bg: $ink-deep;
+$navbar-fg: $lilac;
+$navbar-hl: $pale-yellow;
+$footer-bg: $ink;
+
+$font-family-sans-serif: "Jost", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+$font-family-base: $font-family-sans-serif;
+$headings-font-family: "Times New Roman", Times, serif;
+$headings-font-weight: 400;
+$headings-color: $pale-yellow;
+$callout-color-tip: $pale-yellow;
+
+/*-- scss:rules --*/
+@import url("https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,400;0,500;0,600;1,400&display=swap");
+
+// Slate ships gradients, text shadows, and dividers on the navbar; keep it flat.
+.navbar { background-image: none; text-shadow: none; }
+.navbar .nav-link, .navbar .nav-item, .navbar .navbar-nav, .navbar .navbar-brand { border: none !important; box-shadow: none; }
+
+// Colour of the moon marks around CV section headings
+:root { --cv-mark: #{$pale-yellow}; }

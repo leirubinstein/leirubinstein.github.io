@@ -1,31 +1,58 @@
 project:
   type: website
   output-dir: docs
+  render:
+    - "*.qmd"
+    - "posts/**/*.qmd"
+    - "posts/**/*.ipynb"
+  resources:
+    - .nojekyll
+    - cv/Rubinstein_Leilanie_CV.pdf
 
 website:
   title: "Leilanie Rubinstein"
-  favicon: images/moon-regular.svg
+  description: "Environmental data scientist working on remote sensing, machine learning, and environmental policy."
+  site-url: https://leirubinstein.github.io
+  repo-url: https://github.com/leirubinstein/leirubinstein.github.io
+  favicon: images/favicon.svg
+  open-graph: true
   navbar:
-    title: "Leilanie Rubinstein"
-    logo: images/logo-1-web-color.png
+    logo: images/logo.png
+    logo-alt: "Leilanie Rubinstein logo"
     left:
-      - href: index.qmd
-        text: Home
-      - about.qmd
-      - posts.qmd
-      - nature-photography.qmd
-      - portrait-photography.qmd
+      - text: Home
+        href: index.qmd
+      - text: CV
+        href: cv.qmd
+      - text: Blog
+        href: blog.qmd
+      - text: Photos
+        href: photos.qmd
+    right:
+      - icon: github
+        href: https://github.com/leirubinstein
+        aria-label: GitHub
+      - icon: linkedin
+        href: https://www.linkedin.com/in/leilanie-rubinstein/
+        aria-label: LinkedIn
+      - icon: envelope
+        href: mailto:leilanierubinstein@gmail.com
+        aria-label: Email
+      - icon: rss
+        href: blog.xml
+        aria-label: RSS feed
   page-footer:
-    left: Copyright 2024 {{< fa regular copyright title="copyright logo" >}}  Leilanie Rubinstein
-    right: This website is built with  {{< fa brands github-alt title="github cat icon" >}}
-  
+    left: "© 2026 Leilanie Rubinstein"
+    right: "Built with [Quarto](https://quarto.org)"
+
 format:
   html:
-    theme: styles.scss
-    mainfont: Josefin Sans
-#    css: styles.css
+    theme:  # dark is listed first, so it is the default
+      dark: [slate, styles/dark.scss]
+      light: [litera, styles/light.scss]
+    css: styles/site.css
     toc: true
-    page-layout: full
-
-
-
+    smooth-scroll: true
+    link-external-newwindow: true
+    code-copy: true
+    highlight-style: github

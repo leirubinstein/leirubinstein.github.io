@@ -3,9 +3,7 @@ title: "Ocean Chemistry and Santa Barbara Channel Macrocystis Pyrifera Populatio
 author: "Leilanie Rubinstein"
 date: "2024-12-12"
 description: "Investigating whether ocean chemistry has an impact on kelp forest biomass in the Santa Barbara Channel"
-format: 
-  html:
-    embed-resources: true
+format: html
 categories: [R, Marine, Statistical Analysis]
 image: DSC_4341.jpg
 editor: visual

@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss  xmlns:atom="http://www.w3.org/2005/Atom" 
+      xmlns:media="http://search.yahoo.com/mrss/" 
+      xmlns:content="http://purl.org/rss/1.0/modules/content/" 
+      xmlns:dc="http://purl.org/dc/elements/1.1/" 
+      version="2.0">
+<channel>
+<title>Leilanie Rubinstein</title>
+<link>https://leirubinstein.github.io/blog.html</link>
+<atom:link href="https://leirubinstein.github.io/blog.xml" rel="self" type="application/rss+xml"/>
+<description>Environmental data scientist working on remote sensing, machine learning, and environmental policy.</description>
+<generator>quarto-1.6.39</generator>
+<lastBuildDate>Fri, 21 Mar 2025 07:00:00 GMT</lastBuildDate>
+<item>
+  <title>Casual Inference Study Recreation - Gatti et al, 2020</title>
+  <dc:creator>Takeen Shamloo, Karol Paya, Leilanie Rubinstein</dc:creator>
+  <link>https://leirubinstein.github.io/posts/2025-03-21-gatti-2020-recreation/gatti-2020-recreation.html</link>
+  <description><![CDATA[ Recreating Results from Gatti et al, 2020 ]]></description>
+  <category>R</category>
+  <category>Statistical Analysis</category>
+  <category>Causal Inference</category>
+  <category>Agriculture</category>
+  <guid>https://leirubinstein.github.io/posts/2025-03-21-gatti-2020-recreation/gatti-2020-recreation.html</guid>
+  <pubDate>Fri, 21 Mar 2025 07:00:00 GMT</pubDate>
+  <media:content url="https://leirubinstein.github.io/posts/2025-03-21-gatti-2020-recreation/table4_from_paper.png" medium="image" type="image/png" height="75" width="144"/>
+</item>
+<item>
+  <title>Voter Registration Data Infographic</title>
+  <dc:creator>Leilanie Rubinstein</dc:creator>
+  <link>https://leirubinstein.github.io/posts/2025-03-17-voter-data-viz/SB-voter-visualization.html</link>
+  <description><![CDATA[ Visualizing partisan trends using Santa Barbara County voter registration data ]]></description>
+  <category>R</category>
+  <category>Data Visualization</category>
+  <category>Spatial Analysis</category>
+  <category>Political Data</category>
+  <guid>https://leirubinstein.github.io/posts/2025-03-17-voter-data-viz/SB-voter-visualization.html</guid>
+  <pubDate>Mon, 17 Mar 2025 07:00:00 GMT</pubDate>
+  <media:content url="https://leirubinstein.github.io/posts/2025-03-17-voter-data-viz/voter-data-infographic.png" medium="image" type="image/png" height="222" width="144"/>
+</item>
+<item>
+  <title>Houston Blackouts Mapping</title>
+  <dc:creator>Leilanie Rubinstein</dc:creator>
+  <link>https://leirubinstein.github.io/posts/2024-12-19-houston-blackout-visualization/houston-blackouts.html</link>
+  <description><![CDATA[ Identifying impacts of extreme weather on the Texas power grid ]]></description>
+  <category>R</category>
+  <category>Spatial Analysis</category>
+  <category>Remote Sensing</category>
+  <category>Energy</category>
+  <guid>https://leirubinstein.github.io/posts/2024-12-19-houston-blackout-visualization/houston-blackouts.html</guid>
+  <pubDate>Thu, 19 Dec 2024 08:00:00 GMT</pubDate>
+  <media:content url="https://leirubinstein.github.io/posts/2024-12-19-houston-blackout-visualization/houston_blackout.gif" medium="image" type="image/gif"/>
+</item>
+<item>
+  <title>Thomas Fire: Perimeter Visualization &amp; Land Cover Statistics</title>
+  <dc:creator>Leilanie Rubinstein</dc:creator>
+  <link>https://leirubinstein.github.io/posts/2024-12-04-thomas-fire-visualization/thomas-fire-blogpost.html</link>
+  <description><![CDATA[ True and false color visualization using Landsat data ]]></description>
+  <category>Python</category>
+  <category>MEDS</category>
+  <guid>https://leirubinstein.github.io/posts/2024-12-04-thomas-fire-visualization/thomas-fire-blogpost.html</guid>
+  <pubDate>Fri, 13 Dec 2024 08:00:00 GMT</pubDate>
+  <media:content url="https://leirubinstein.github.io/posts/2024-12-04-thomas-fire-visualization/perimeter-screenshot.png" medium="image" type="image/png" height="104" width="144"/>
+</item>
+<item>
+  <title>Ocean Chemistry and Santa Barbara Channel Macrocystis Pyrifera Populations</title>
+  <dc:creator>Leilanie Rubinstein</dc:creator>
+  <link>https://leirubinstein.github.io/posts/2024-12-12-ocean-chem-kelp/final-project-clean.html</link>
+  <description><![CDATA[ Investigating whether ocean chemistry has an impact on kelp forest biomass in the Santa Barbara Channel ]]></description>
+  <category>R</category>
+  <category>Marine</category>
+  <category>Statistical Analysis</category>
+  <guid>https://leirubinstein.github.io/posts/2024-12-12-ocean-chem-kelp/final-project-clean.html</guid>
+  <pubDate>Thu, 12 Dec 2024 08:00:00 GMT</pubDate>
+  <media:content url="https://leirubinstein.github.io/posts/2024-12-12-ocean-chem-kelp/DSC_4341.jpg" medium="image" type="image/jpeg"/>
+</item>
+<item>
+  <title>Aquaculture Suitability Map</title>
+  <dc:creator>Leilanie Rubinstein</dc:creator>
+  <link>https://leirubinstein.github.io/posts/2024-12-24-aquaculture-suitability/suitable-aquaculture.html</link>
+  <description><![CDATA[ Determining and visualizing which West Coast EEZs are best suited to developing species-specific marine aquaculture ]]></description>
+  <category>R</category>
+  <category>Marine</category>
+  <category>Geospatial Analysis</category>
+  <guid>https://leirubinstein.github.io/posts/2024-12-24-aquaculture-suitability/suitable-aquaculture.html</guid>
+  <pubDate>Wed, 11 Dec 2024 08:00:00 GMT</pubDate>
+</item>
+<item>
+  <title>Photo Gallery</title>
+  <dc:creator>Leilanie Rubinstein</dc:creator>
+  <link>https://leirubinstein.github.io/posts/2024-10-18-my-first-post/</link>
+  <description><![CDATA[ some photos I’ve taken recently ]]></description>
+  <category>Quarto</category>
+  <category>Photography</category>
+  <guid>https://leirubinstein.github.io/posts/2024-10-18-my-first-post/</guid>
+  <pubDate>Fri, 18 Oct 2024 07:00:00 GMT</pubDate>
+  <media:content url="https://leirubinstein.github.io/posts/2024-10-18-my-first-post/DSC_9156.jpg" medium="image" type="image/jpeg"/>
+</item>
+</channel>
+</rss>

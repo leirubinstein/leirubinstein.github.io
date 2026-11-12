@@ -1,0 +1,50 @@
+---
+title: "Photos"
+aliases:
+  - nature-photography.html
+  - portrait-photography.html
+toc: false
+body-classes: photos-page
+
+gallery:
+  nature:
+    - file: DSC_4341.jpg
+      caption: "Kelp forests at Santa Cruz Island, Channel Islands National Park"
+    - file: DSC_9405.jpg
+      caption: "Dolphin breaching in the Santa Barbara Channel, CA"
+    - file: DSC_9327.jpg
+      caption: "Dolphins in the Santa Barbara Channel, CA"
+    - file: DSC_9389.jpg
+      caption: "School of sardines in the Santa Barbara Channel, CA"
+    - file: DSC_9156.jpg
+      caption: "Mount San Jacinto, Palm Springs, CA"
+    - file: DSC_9137.jpg
+      caption: "Windmills outside of Palm Springs, CA"
+    - file: DSC_0681.jpg
+      caption: "Sunset from More Mesa, Santa Barbara, CA"
+    - file: _DSC2631.jpg
+      caption: "UCSB Lagoon, Santa Barbara, CA"
+    - file: DSC_7873.jpg
+      caption: "Dead Sea sunrise from Masada, Israel"
+  portraits:
+    - file: DSC_4024.jpg
+    - file: DSC_3821.jpg
+    - file: DSC_8170.jpg
+    - file: DSC_3774.jpg
+    - file: DSC_8476.jpg
+    - file: _DSC6356.jpg
+    - file: DSC_1744.jpg
+    - file: DSC_7832-2.jpg
+    - file: DSC_8226-2-2.jpg
+    - file: DSC_0494.jpg
+    - file: DSC_2101.jpg
+    - file: _DSC7960-Edit.jpg
+---
+
+## Nature
+
+{{< gallery nature >}}
+
+## Portraits & Graduation
+
+{{< gallery portraits alt="Portrait by Leilanie Rubinstein" >}}

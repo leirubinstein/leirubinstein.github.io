@@ -8,7 +8,6 @@ image: table4_from_paper.png
 categories: [R, Statistical Analysis, Causal Inference, Agriculture]
 format: 
   html:
-    embed-resources: true
     code-fold: true
     code-summary: "Show code"
 editor_options: 

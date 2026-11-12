@@ -1,0 +1,273 @@
+---
+title: "Curriculum Vitae"
+toc: true
+toc-depth: 2
+body-classes: cv-page
+---
+
+::: {.callout-tip appearance="simple"}
+[Download the PDF version](cv/Rubinstein_Leilanie_CV.pdf){.btn .btn-primary .btn-sm} &nbsp; Updated November 2026
+:::
+
+## Education
+
+::: cv-entry
+::: cv-when
+2025
+:::
+::: cv-what
+**Master of Environmental Data Science**, *Bren School of Environmental Science & Management*, University of California, Santa Barbara
+:::
+:::
+
+::: cv-entry
+::: cv-when
+2021
+:::
+::: cv-what
+**B.A. in Political Science (International Relations)** and **B.A. in Environmental Studies**, *University of California, Santa Barbara*
+:::
+:::
+
+## Research
+
+::: cv-entry
+::: cv-when
+2025–Present
+:::
+::: cv-what
+**African land cover change and protected area impact observed in a mega-archive of historical aerial imagery**, *In preparation*
+
+- Developing a land cover prediction pipeline and running inference on a high performance computing system over 640,000 historical aerial images of 18 countries in sub-Saharan Africa during the 20th century
+- Generating figures, calculating summary statistics, and evaluating performance metrics for a descriptive analysis of land cover change and the impact of protected areas
+- Reviewing literature on earth observation of protected areas to identify a data gap
+:::
+:::
+
+::: cv-entry
+::: cv-when
+2025
+:::
+::: cv-what
+**Remote Sensing of Defensible Space Compliance to Enhance Wildfire Preparedness**, *Master's Capstone Project*
+
+- Developed a machine learning model that predicts compliance with wildfire defensible space requirements from satellite imagery and annual inspection data from the Santa Barbara County Fire Department
+- Designed automated workflows to match satellite imagery chips to property parcels, integrating imagery, inspection records, and property and building datasets
+- Applied unsupervised and supervised learning to predict compliance using random convolutional imagery features and environmental variables
+- Collaborated with faculty on causal inference research measuring the impacts of communication interventions
+:::
+:::
+
+::: cv-entry
+::: cv-when
+2025
+:::
+::: cv-what
+**[Santa Barbara County Political Mapping and Voter Analysis](posts/2025-03-17-voter-data-viz/SB-voter-visualization.qmd)**
+
+- Created interactive maps and visualizations of the spatial distribution of Democratic and Republican voters across Santa Barbara County using voter registration and census data
+- Analyzed voter demographics, party composition, and registration trends from 2000–2024, revealing partisan age differences and election-year registration spikes
+:::
+:::
+
+## Work Experience
+
+::: cv-entry
+::: cv-when
+2025–Present
+:::
+::: cv-what
+**Social Science Research Professional I**, *Global Policy Lab*, Stanford Doerr School of Sustainability, Environmental Social Sciences
+
+- Research assistant for the Aerial History Project, tracking long-term economic development and its relationship to the environment using an archive of 1.6 million historical aerial photographs, mostly in Africa
+- Conducting statistical and econometric analysis on large geospatial and remotely sensed datasets with an interdisciplinary team of PIs and researchers
+- Building machine learning pipelines to process and visualize data on Stanford's high performance computing cluster
+:::
+:::
+
+::: cv-entry
+::: cv-when
+2024–2025
+:::
+::: cv-what
+**Teaching Assistant**, *UCSB Department of Economics*, University of California, Santa Barbara
+
+- Graduate teaching assistant for Dr. Alan Ebenstein in economic theory and economic history courses
+- Developed rubrics and assessment criteria; graded research papers, exams, and quizzes
+:::
+:::
+
+::: cv-entry
+::: cv-when
+2023–2024
+:::
+::: cv-what
+**Habitat Restoration Field Technician**, *Channel Islands Restoration*, Santa Barbara, CA
+
+- Restored sites across Santa Barbara and Ventura counties, identifying and collecting field data on native and invasive plant species
+- Used GIS applications while maintaining data integrity and quality control standards
+:::
+:::
+
+::: cv-entry
+::: cv-when
+2024
+:::
+::: cv-what
+**South County Field Organizer**, *Santa Barbara County Democratic Party*, Santa Barbara, CA
+
+- Managed campaigns for a portfolio of local and national candidates, maintaining a database of 1,000+ volunteers
+- Coordinated voter outreach with local labor unions and progressive organizations
+- Developed messaging for voter registration, election turnout, and fundraising
+:::
+:::
+
+::: cv-entry
+::: cv-when
+2021–2023
+:::
+::: cv-what
+**Legal Assistant/Paralegal**, *Greben | Monroe*, Santa Barbara, CA
+
+- Drafted and reviewed discovery requests, motions, and subpoenas for environmental litigation under the Clean Water Act, CERCLA, Prop 65, and at Superfund sites
+- Examined NEPA and CEQA review documentation (EA/IS, FONSI, EIR/EIS) in disputes over water and soil pollution remediation
+:::
+:::
+
+## Other Work Experience
+
+::: cv-entry
+::: cv-when
+2019–Present
+:::
+::: cv-what
+**Freelance Photographer**, *Self-Employed*, Santa Barbara, CA
+
+- Portrait, event, and graduation photography for clients throughout Southern California ([gallery](photos.qmd))
+- Manage all aspects of the business, from client consultations and scheduling to post-processing and delivery
+:::
+:::
+
+::: cv-entry
+::: cv-when
+2021
+:::
+::: cv-what
+**Legal Intern**, *UCSB Associated Students Legal Resource Center*, Isla Vista, CA
+
+- Conducted intake interviews on landlord-tenant disputes, family law, traffic citations, and criminal charges
+- Assisted the practicing attorney with case research and local and state housing law
+:::
+:::
+
+::: cv-entry
+::: cv-when
+2019–2020
+:::
+::: cv-what
+**District Intern**, *Congressman Salud Carbajal*, Santa Barbara, CA
+
+- Communicated with constituents, supported policy research, and helped resolve immigration, veterans' affairs, and environmental casework with federal agencies
+:::
+:::
+
+::: cv-entry
+::: cv-when
+2019–2020
+:::
+::: cv-what
+**Campaign Intern**, *Das Williams for Supervisor*, Santa Barbara, CA
+
+- Canvassed hundreds of voters in Santa Barbara County, gauging responses to endorsements and policy positions
+:::
+:::
+
+## Leadership
+
+::: cv-entry
+::: cv-when
+2024–2026
+:::
+::: cv-what
+**Elected Representative**, Santa Barbara County Democratic Central Committee
+:::
+:::
+
+::: cv-entry
+::: cv-when
+2025
+:::
+::: cv-what
+**Delegate**, California Democratic State Central Committee
+:::
+:::
+
+::: cv-entry
+::: cv-when
+2024–2025
+:::
+::: cv-what
+**Student-Faculty Representative**, Bren School of Environmental Science & Management
+:::
+:::
+
+::: cv-entry
+::: cv-when
+2022–2025
+:::
+::: cv-what
+**Treasurer**, Santa Barbara Young Democrats
+:::
+:::
+
+::: cv-entry
+::: cv-when
+2018–2021
+:::
+::: cv-what
+**UCSB Campus Democrats**: President (2020–2021), Field Director (2019–2020), Communications Director (2018–2019)
+:::
+:::
+
+## Volunteer Experience
+
+::: cv-entry
+::: cv-when
+2024
+:::
+::: cv-what
+**Graduate Peer Mentor**, *UCSB SACNAS*
+
+- Mentored an undergraduate on research position applications, personal statements, and professional development
+:::
+:::
+
+::: cv-entry
+::: cv-when
+2017–2024
+:::
+::: cv-what
+**Campaign Volunteer**, *Santa Barbara County Democratic Party*
+
+- Canvassed and called voters for dozens of candidates and measures at the federal, state, county, and local levels
+- Registered hundreds of student voters through on- and off-campus registration drives
+:::
+:::
+
+## Technical Skills
+
+| | |
+|---|---|
+| **Languages** | Python, R, SQL, Bash, LaTeX, SLURM, HTML, JavaScript, CSS, SCSS |
+| **Version control & containers** | Git, GitHub, Apptainer |
+| **Databases** | BigQuery, DuckDB, SQLite |
+| **Cloud computing** | Google Earth Engine, Google Colab, LabelBox |
+| **Graphic design** | Adobe Creative Suite, Affinity Designer, Canva, CorelDRAW |
+| **Other** | Microsoft Office, Mailchimp, Constant Contact, Squarespace, WordPress, PDI Online Campaign Tools |
+
+## Languages
+
+| | |
+|---|---|
+| **Fluent** | English, Mandarin Chinese |
+| **Conversational** | French |
